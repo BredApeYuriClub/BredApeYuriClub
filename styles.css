@@ -1,0 +1,168 @@
+/* Resetare stiluri implicite */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Setări generale pentru body */
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #ffe8d6;
+    color: #333;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #4d2be7;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.navbar a img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+}
+
+.dropdown-content a:hover {
+    background-color: #ffe0b2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbar-right {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* Homepage */
+.homepage {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    padding: 10px;
+}
+
+.collection-link {
+    text-align: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 220px;
+}
+
+.collection-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.collection-link img {
+    width: 220px;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 2px solid #ddd;
+}
+
+.collection-link p {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4d2be7;
+}
+
+/* Footer */
+footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #4d2be7;
+    color: white;
+    font-weight: bold;
+}
+
+/* Buton mint */
+.mint-button {
+    display: inline-block;
+    background-color: #d4af37;
+    color: white;
+    padding: 12px 25px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.mint-button:hover {
+    background-color: #b8860b;
+}
+
+/* Media Queries pentru dispozitive mobile */
+@media (max-width: 768px) {
+    .homepage {
+        flex-direction: column;
+        align-items: center;
+    }
+    .collection-link {
+        width: 90%;
+        margin: 10px 0;
+    }
+}

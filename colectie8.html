@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ape UEFA Champions League</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe8d6;
+            color: #333;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #cec8b5;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            gap: 20px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .navbar a img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-weight: normal;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #cec8b5;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .navbar-right {
+            margin-left: auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Collection Page Content */
+        .collection-page {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .collection-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #504e74;
+            text-shadow: 2px 2px #504e74;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto; /* Păstrează proporțiile */
+            max-width: 2000px; /* Dimensiunea dorită */
+            max-height: 834px;
+            z-index: -1;
+            opacity: 0.2;
+            object-fit: cover;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 650px;
+            margin-top: 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .thumbnail-grid a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .thumbnail-grid img {
+            width: 100%;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .thumbnail-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .mint-button {
+            display: inline-block;
+            background-color: #504e74;
+            color: white;
+            padding: 12px 25px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .mint-button:hover {
+            background-color: #504e74;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Collections</a>
+            <div class="dropdown-content">
+                <a href="colectie1.html">BredApeYuriClub</a>
+                <a href="colectie2.html">Apes Bunitori Club</a>
+                <a href="colectie3.html">Apes Bunitori Evolution</a>
+                <a href="colectie4.html">Apes Bunitori Gold Club</a>
+                <a href="colectie5.html">Apes Bunitori Premium</a>
+                <a href="colectie6.html">Apes Bunitori Christmas Club</a>
+                <a href="colectie7.html">Apes Bunitori Limited Edition</a>
+                <a href="colectie8.html">Ape UEFA Champions League</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <a href="https://x.com/BradApeYuriClub" target="_blank">
+                <img src="images/twitter-logo.png" alt="Twitter"> Twitter
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/opensea-logo.png" alt="OpenSea"> OpenSea
+            </a>
+        </div>
+    </nav>
+
+    <!-- Background Image -->
+    <img src="images/apes-bunitori-space-main.png" alt="Background Image" class="background-image">
+  
+    <!-- Collection Page Content -->
+    <div class="collection-page">
+        <h1 class="collection-title">Ape UEFA Champions League</h1>
+        <img src="images/placeholder8.png" alt="Main Image Collection 8" class="main-image">
+        <div class="thumbnail-grid">
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space1.png" alt="Thumbnail 1">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space2.png" alt="Thumbnail 2">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space3.png" alt="Thumbnail 3">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space4.png" alt="Thumbnail 4">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space5.png" alt="Thumbnail 5">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space6.png" alt="Thumbnail 6">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space7.png" alt="Thumbnail 7">
+            </a>
+            <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank">
+                <img src="images/space8.png" alt="Thumbnail 8">
+            </a>
+        </div>
+        <a href="https://opensea.io/collection/ape-uefa-champions-league/overview" target="_blank" class="mint-button">Mint on OpenSea</a>
+    </div>
+</body>
+</html>
