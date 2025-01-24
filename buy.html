@@ -1,92 +1,80 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy NFTs</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Marketplace NFT</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.24/dist/ethers.umd.min.js"></script>
 </head>
 <body>
-    <!-- Header cu colecțiile -->
-    <header>
-        <h1>Colectiile tale NFT</h1>
-        <div class="collections">
-            <!-- Cele 8 colecții -->
-            <div class="collection">
-                <img src="collection1.jpg" alt="Colecția 1">
-                <h3>Colecția 1</h3>
-            </div>
-            <div class="collection">
-                <img src="collection2.jpg" alt="Colecția 2">
-                <h3>Colecția 2</h3>
-            </div>
-            <div class="collection">
-                <img src="collection3.jpg" alt="Colecția 3">
-                <h3>Colecția 3</h3>
-            </div>
-            <div class="collection">
-                <img src="collection4.jpg" alt="Colecția 4">
-                <h3>Colecția 4</h3>
-            </div>
-            <div class="collection">
-                <img src="collection5.jpg" alt="Colecția 5">
-                <h3>Colecția 5</h3>
-            </div>
-            <div class="collection">
-                <img src="collection6.jpg" alt="Colecția 6">
-                <h3>Colecția 6</h3>
-            </div>
-            <div class="collection">
-                <img src="collection7.jpg" alt="Colecția 7">
-                <h3>Colecția 7</h3>
-            </div>
-            <div class="collection">
-                <img src="collection8.jpg" alt="Colecția 8">
-                <h3>Colecția 8</h3>
-            </div>
-        </div>
-    </header>
+    <h1>Welcome to NFT Marketplace</h1>
 
-    <!-- Secțiune pentru MetaMask -->
-    <section class="metamask">
-        <h2>Conectează-te la MetaMask pentru a cumpăra NFT-uri</h2>
-        <!-- Butonul de conectare MetaMask -->
-        <ul>
-            <li class="w-full">
-                <button class="items-center bg-inherit font-[inherit] text-[100%] flex border border-level-2 p-4 cursor-pointer hover:bg-component-gray-1 active:bg-component-gray-2 px-4 py-3 w-full" type="button" data-id="Item">
-                    <img class="overflow-hidden order-2 mr-4 shrink-0 self-center text-primary" size="30" data-id="ItemAvatar" alt="MetaMask" src="/static/images/logos/metamask-fox.svg" style="width: 30px; height: 30px;">
-                    <div class="flex flex-col justify-center order-3 mr-4 overflow-hidden flex-auto items-start self-stretch" data-id="ItemContent">
-                        <span class="text-md leading-md font-semibold text-primary" data-id="ItemTitle">MetaMask</span>
-                    </div>
-                    <div class="flex flex-col order-4 max-w-[40%] overflow-hidden text-right flex-[0_0_auto] justify-center self-stretch">
-                        <div class="flex flex-col justify-center items-center rounded-md bg-component-gray-1 p-2 capitalize">
-                            <span class="text-xs leading-xs font-semibold text-secondary opacity-80" data-id="TextBody">Last used</span>
-                        </div>
-                    </div>
-                </button>
-            </li>
-        </ul>
-    </section>
+    <button id="connectButton">Connect to MetaMask</button>
+    <div id="accountInfo" style="display:none;">
+        <h3>Account:</h3>
+        <p id="account"></p>
+        <button id="buyNFTButton">Buy NFT</button>
+    </div>
 
     <script>
-        // Verifică dacă MetaMask este instalat
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask este instalat!');
+        // Check if MetaMask is installed
+        if (typeof window.ethereum === 'undefined') {
+            alert("MetaMask is not installed. Please install MetaMask to use this feature.");
         } else {
-            alert('MetaMask nu este instalat sau nu este detectat!');
-        }
+            // Connect to MetaMask
+            const connectButton = document.getElementById("connectButton");
+            const accountInfo = document.getElementById("accountInfo");
+            const accountParagraph = document.getElementById("account");
+            const buyNFTButton = document.getElementById("buyNFTButton");
 
-        // Funcția pentru conectarea la MetaMask
-        document.querySelector('button').addEventListener('click', async () => {
-            try {
-                // Solicită acces la contul MetaMask
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                console.log('Conectat la MetaMask, contul:', accounts[0]);
-            } catch (error) {
-                console.error('Eroare la conectarea cu MetaMask:', error);
-                alert('Nu am reușit să ne conectăm la MetaMask. Verifică setările!');
-            }
-        });
+            connectButton.addEventListener("click", async () => {
+                try {
+                    // Request account access
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    const userAccount = accounts[0];
+
+                    // Display user account information
+                    accountParagraph.textContent = userAccount;
+                    accountInfo.style.display = "block";
+                    connectButton.style.display = "none";
+                } catch (error) {
+                    console.error("User rejected the connection request or an error occurred.");
+                }
+            });
+
+            // Buy NFT button click handler
+            buyNFTButton.addEventListener("click", async () => {
+                try {
+                    // Set up the provider and signer
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = provider.getSigner();
+
+                    // Specify the contract address and ABI for the NFT contract
+                    const nftContractAddress = "0xYourNFTContractAddress"; // Replace with actual NFT contract address
+                    const nftAbi = [
+                        "function buyNFT(uint256 tokenId) public payable"
+                    ];
+
+                    const contract = new ethers.Contract(nftContractAddress, nftAbi, signer);
+
+                    // Define the token ID you want to buy and price (in Wei)
+                    const tokenId = 1; // Example token ID
+                    const price = ethers.parseUnits("0.1", "ether"); // Example price 0.1 ETH
+
+                    // Call the buyNFT function
+                    const tx = await contract.buyNFT(tokenId, {
+                        value: price
+                    });
+
+                    // Wait for transaction to be mined
+                    await tx.wait();
+                    alert("NFT successfully purchased!");
+                } catch (error) {
+                    console.error("Error buying NFT:", error);
+                    alert("Failed to purchase NFT.");
+                }
+            });
+        }
     </script>
 </body>
 </html>
