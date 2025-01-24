@@ -34,17 +34,6 @@
             max-width: 100%;
             border-radius: 10px;
         }
-        .nft-item button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .nft-item button:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
@@ -66,12 +55,11 @@
     </div>
 
     <script>
-        // Initialize the provider and contract address
-        const nftContractAddress = "0x85A9ab85c0E70780d9dd1676e0a9Aaff900a06fE";  // Your contract address
+        // Contract address and ABI (replace with your actual contract ABI)
+        const nftContractAddress = "0x85A9ab85c0E70780d9dd1676e0a9Aaff900a06fE";
         const nftAbi = [
             "function tokenURI(uint256 tokenId) public view returns (string memory)",
-            "function totalSupply() public view returns (uint256)",
-            "function buyNFT(uint256 tokenId) public payable"
+            "function totalSupply() public view returns (uint256)"
         ];
 
         let userAccount = null;
@@ -108,8 +96,9 @@
         async function fetchNFTs() {
             try {
                 const totalSupply = await contract.totalSupply();
+                console.log("Total NFTs in contract:", totalSupply.toString());
 
-                // Loop through all NFTs
+                // Loop through all NFTs and display
                 for (let tokenId = 1; tokenId <= totalSupply; tokenId++) {
                     const tokenURI = await contract.tokenURI(tokenId);
                     const metadata = await fetch(tokenURI).then(response => response.json());
@@ -129,19 +118,10 @@
                     const nftDescription = document.createElement("p");
                     nftDescription.textContent = metadata.description;
 
-                    const nftPrice = metadata.price || 0.1;  // Default price if not specified
-
-                    const buyButton = document.createElement("button");
-                    buyButton.textContent = `Buy for ${nftPrice} ETH`;
-                    buyButton.onclick = function() {
-                        buyNFT(tokenId, ethers.parseUnits(nftPrice.toString(), "ether"));
-                    };
-
                     // Append elements to the page
                     nftElement.appendChild(nftImage);
                     nftElement.appendChild(nftName);
                     nftElement.appendChild(nftDescription);
-                    nftElement.appendChild(buyButton);
 
                     document.getElementById("nftList").appendChild(nftElement);
                 }
@@ -149,19 +129,6 @@
                 console.error("Error fetching NFTs:", error);
             }
         }
-
-        // Function to buy NFT
-        async function buyNFT(tokenId, price) {
-            try {
-                const tx = await contract.buyNFT(tokenId, { value: price });
-                await tx.wait();
-                alert("NFT successfully purchased!");
-            } catch (error) {
-                console.error("Error buying NFT:", error);
-                alert("Failed to purchase NFT.");
-            }
-        }
-
     </script>
 </body>
 </html>
