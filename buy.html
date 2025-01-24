@@ -50,9 +50,10 @@
                     const signer = provider.getSigner();
 
                     // Specify the contract address and ABI for the NFT contract
-                    const nftContractAddress = "0xYourNFTContractAddress"; // Replace with actual NFT contract address
+                    const nftContractAddress = "0x3f571f102a303bc4e6aF6Cb4CE2c7bd96E5D934c"; // Replace with actual NFT contract address
                     const nftAbi = [
-                        "function buyNFT(uint256 tokenId) public payable"
+                        "function buyNFT(uint256 tokenId) public payable",
+                        "function balanceOf(address owner) public view returns (uint256)"
                     ];
 
                     const contract = new ethers.Contract(nftContractAddress, nftAbi, signer);
@@ -60,6 +61,13 @@
                     // Define the token ID you want to buy and price (in Wei)
                     const tokenId = 1; // Example token ID
                     const price = ethers.parseUnits("0.1", "ether"); // Example price 0.1 ETH
+
+                    // Check if user has enough ETH before purchasing
+                    const balance = await signer.getBalance();
+                    if (balance.lt(price)) {
+                        alert("You don't have enough ETH to purchase this NFT.");
+                        return;
+                    }
 
                     // Call the buyNFT function
                     const tx = await contract.buyNFT(tokenId, {
@@ -71,7 +79,7 @@
                     alert("NFT successfully purchased!");
                 } catch (error) {
                     console.error("Error buying NFT:", error);
-                    alert("Failed to purchase NFT.");
+                    alert("Failed to purchase NFT. Error: " + error.message);
                 }
             });
         }
