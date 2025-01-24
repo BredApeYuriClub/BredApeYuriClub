@@ -67,6 +67,8 @@
         // Check if MetaMask is installed
         if (typeof window.ethereum === 'undefined') {
             alert("MetaMask is not installed. Please install MetaMask to use this feature.");
+            document.getElementById('connectButton').disabled = true;
+            document.getElementById('connectButton').innerText = "MetaMask Not Detected";
         }
 
         // Set up the provider and signer
@@ -81,14 +83,25 @@
 
         connectButton.addEventListener("click", async () => {
             try {
+                // Request account access from MetaMask
                 const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                userAccount = accounts[0];
-                accountParagraph.textContent = userAccount;
-                accountInfo.style.display = "block";
-                connectButton.style.display = "none";
-                fetchNFTs();  // Fetch NFTs after connecting
+
+                // Check if there are any accounts in MetaMask
+                if (accounts.length > 0) {
+                    userAccount = accounts[0];
+                    accountParagraph.textContent = userAccount;
+                    accountInfo.style.display = "block";
+                    connectButton.style.display = "none";
+                    fetchNFTs();  // Fetch NFTs after connecting
+                } else {
+                    alert("No accounts found in MetaMask.");
+                }
             } catch (error) {
-                console.error("User rejected the connection request or an error occurred.");
+                if (error.code === 4001) {
+                    alert("User denied the connection request.");
+                } else {
+                    alert("An error occurred while connecting to MetaMask: " + error.message);
+                }
             }
         });
 
