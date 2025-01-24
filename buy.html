@@ -5,142 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace NFT</title>
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.24/dist/ethers.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .nft-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .nft-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            width: 200px;
-            text-align: center;
-            border-radius: 10px;
-        }
-        .nft-item img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-    </style>
 </head>
 <body>
     <h1>Welcome to NFT Marketplace</h1>
-    
-    <!-- Button to connect MetaMask -->
+
     <button id="connectButton">Connect to MetaMask</button>
-    
-    <!-- Account info section -->
     <div id="accountInfo" style="display:none;">
         <h3>Account:</h3>
         <p id="account"></p>
-    </div>
-
-    <!-- NFT List Section -->
-    <h2>Available NFTs</h2>
-    <div id="nftList" class="nft-list">
-        <!-- NFTs will be displayed here -->
+        <button id="buyNFTButton">Buy NFT</button>
     </div>
 
     <script>
-        // Contract address and ABI (replace with your actual contract ABI)
-        const nftContractAddress = "0x85A9ab85c0E70780d9dd1676e0a9Aaff900a06fE";
-        const nftAbi = [
-            "function tokenURI(uint256 tokenId) public view returns (string memory)",
-            "function totalSupply() public view returns (uint256)"
-        ];
-
-        let userAccount = null;
-
         // Check if MetaMask is installed
         if (typeof window.ethereum === 'undefined') {
             alert("MetaMask is not installed. Please install MetaMask to use this feature.");
-            document.getElementById('connectButton').disabled = true;
-            document.getElementById('connectButton').innerText = "MetaMask Not Detected";
-        }
+        } else {
+            // Connect to MetaMask
+            const connectButton = document.getElementById("connectButton");
+            const accountInfo = document.getElementById("accountInfo");
+            const accountParagraph = document.getElementById("account");
+            const buyNFTButton = document.getElementById("buyNFTButton");
 
-        // Set up the provider and signer
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(nftContractAddress, nftAbi, signer);
+            connectButton.addEventListener("click", async () => {
+                try {
+                    // Request account access
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    const userAccount = accounts[0];
 
-        // Function to connect MetaMask and display user account
-        const connectButton = document.getElementById("connectButton");
-        const accountInfo = document.getElementById("accountInfo");
-        const accountParagraph = document.getElementById("account");
-
-        connectButton.addEventListener("click", async () => {
-            try {
-                // Request account access from MetaMask
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-
-                // Check if there are any accounts in MetaMask
-                if (accounts.length > 0) {
-                    userAccount = accounts[0];
+                    // Display user account information
                     accountParagraph.textContent = userAccount;
                     accountInfo.style.display = "block";
                     connectButton.style.display = "none";
-                    fetchNFTs();  // Fetch NFTs after connecting
-                } else {
-                    alert("No accounts found in MetaMask.");
+                } catch (error) {
+                    console.error("User rejected the connection request or an error occurred.");
                 }
-            } catch (error) {
-                if (error.code === 4001) {
-                    alert("User denied the connection request.");
-                } else {
-                    alert("An error occurred while connecting to MetaMask: " + error.message);
+            });
+
+            // Buy NFT button click handler
+            buyNFTButton.addEventListener("click", async () => {
+                try {
+                    // Set up the provider and signer
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = provider.getSigner();
+
+                    // Specify the contract address and ABI for the NFT contract
+                    const nftContractAddress = "0xYourNFTContractAddress"; // Replace with actual NFT contract address
+                    const nftAbi = [
+                        "function buyNFT(uint256 tokenId) public payable"
+                    ];
+
+                    const contract = new ethers.Contract(nftContractAddress, nftAbi, signer);
+
+                    // Define the token ID you want to buy and price (in Wei)
+                    const tokenId = 1; // Example token ID
+                    const price = ethers.parseUnits("0.1", "ether"); // Example price 0.1 ETH
+
+                    // Call the buyNFT function
+                    const tx = await contract.buyNFT(tokenId, {
+                        value: price
+                    });
+
+                    // Wait for transaction to be mined
+                    await tx.wait();
+                    alert("NFT successfully purchased!");
+                } catch (error) {
+                    console.error("Error buying NFT:", error);
+                    alert("Failed to purchase NFT.");
                 }
-            }
-        });
-
-        // Function to fetch NFTs and display them
-        async function fetchNFTs() {
-            try {
-                const totalSupply = await contract.totalSupply();
-                console.log("Total NFTs in contract:", totalSupply.toString());
-
-                // Loop through all NFTs and display
-                for (let tokenId = 1; tokenId <= totalSupply; tokenId++) {
-                    const tokenURI = await contract.tokenURI(tokenId);
-                    const metadata = await fetch(tokenURI).then(response => response.json());
-
-                    // Create NFT item element
-                    const nftElement = document.createElement("div");
-                    nftElement.classList.add("nft-item");
-
-                    const nftImage = document.createElement("img");
-                    nftImage.src = metadata.image;  // URL of the NFT image
-                    nftImage.alt = metadata.name;
-                    nftImage.width = 150;
-
-                    const nftName = document.createElement("h3");
-                    nftName.textContent = metadata.name;
-
-                    const nftDescription = document.createElement("p");
-                    nftDescription.textContent = metadata.description;
-
-                    // Append elements to the page
-                    nftElement.appendChild(nftImage);
-                    nftElement.appendChild(nftName);
-                    nftElement.appendChild(nftDescription);
-
-                    document.getElementById("nftList").appendChild(nftElement);
-                }
-            } catch (error) {
-                console.error("Error fetching NFTs:", error);
-            }
+            });
         }
     </script>
 </body>
