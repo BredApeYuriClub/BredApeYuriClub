@@ -148,12 +148,6 @@
             font-weight: bold;
         }
 
-        .navbar-right {
-            margin-left: auto;
-            display: flex;
-            gap: 20px;
-        }
-
         .mint-button {
             display: inline-block;
             background-color: #d4af37;
@@ -171,45 +165,73 @@
         .mint-button:hover {
             background-color: #b8860b;
         }
+
+        .center-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .center-content img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation bar -->
     <nav class="navbar">
-    <a href="index.html">Home</a>
-    <div class="dropdown">
-        <a href="#">Collections</a>
-        <div class="dropdown-content">
-            <a href="colectie1.html">BredApeYuriClub</a>
-            <a href="colectie3.html">Apes Bunitori Evolution</a>
-            <a href="colectie2.html">Apes Apes Bunitori Club</a>
-            <a href="colectie4.html">Apes Bunitori Gold Club</a>
-            <a href="colectie5.html">Apes Bunitori Premium</a>
-            <a href="colectie6.html">Apes Bunitori Christmas Club</a>
-            <a href="colectie7.html">Apes Bunitori Limited Edition</a>
-            <a href="colectie8.html">Ape UEFA Champions League</a>
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#">Collections</a>
+            <div class="dropdown-content">
+                <a href="colectie1.html">BredApeYuriClub</a>
+                <a href="colectie3.html">Apes Bunitori Evolution</a>
+                <a href="colectie2.html">Apes Apes Bunitori Club</a>
+                <a href="colectie4.html">Apes Bunitori Gold Club</a>
+                <a href="colectie5.html">Apes Bunitori Premium</a>
+                <a href="colectie6.html">Apes Bunitori Christmas Club</a>
+                <a href="colectie7.html">Apes Bunitori Limited Edition</a>
+                <a href="colectie8.html">Ape UEFA Champions League</a>
+            </div>
         </div>
-    </div>
-    <div class="navbar-right">
-         <!-- Buy NFT Button -->
-        <a href="buy.html" class="buy-nft-button">Buy Apes Bunitori Club</a>
-        </a>
-        <a href="https://x.com/BradApeYuriClub" target="_blank">
-            <img src="images/twitter-logo.png" alt="Twitter">Twitter
-        </a>
-        <a href="https://opensea.io" target="_blank">
-            <img src="images/opensea-logo.png" alt="OpenSea">OpenSea
-        </a>
-        
-    </div>
-</nav>
-
+        <div class="navbar-right">
+            <a href="buy.html" class="buy-nft-button">Buy Apes Bunitori Club</a>
+            <a href="https://x.com/BradApeYuriClub" target="_blank">
+                <img src="images/twitter-logo.png" alt="Twitter">Twitter
+            </a>
+            <a href="https://opensea.io" target="_blank">
+                <img src="images/opensea-logo.png" alt="OpenSea">OpenSea
+            </a>
+        </div>
+    </nav>
 
     <!-- Background Video -->
     <video autoplay muted loop class="background-image">
         <source src="images/ab.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <!-- Centered Content -->
+     <div class="center-content">
+        <img src="images/coming-soon.png" alt="Upcoming Collection">
+        <a href="#" class="mint-button" id="mintButton">Mint Your NFT</a>
+        <div id="countdown">Loading...</div>
+    </div>
 
     <!-- Homepage -->
     <div class="homepage">
@@ -220,19 +242,19 @@
             </a>
             <p><a href="colectie1.html" style="text-decoration: none; color: #333;">BredApeYuriClub</a></p>
         </div>
-         <!-- Apes Bunitori Evolution -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-evolution/overview" target="_blank">
-                <img src="images/25.png" alt="Apes Bunitori Evolution">
-            </a>
-            <p><a href="colectie3.html" style="text-decoration: none; color: #333;">Apes Bunitori Evolution</a></p>
-        </div>
         <!-- Apes Bunitori Club -->
         <div class="collection-link">
             <a href="https://opensea.io/collection/apes-bunitori-club?tab=items" target="_blank">
                 <img src="images/abc.png" alt="Apes Bunitori Club">
             </a>
             <p><a href="colectie2.html" style="text-decoration: none; color: #333;">Apes Bunitori Club</a></p>
+        </div>
+        <!-- Apes Bunitori Evolution -->
+        <div class="collection-link">
+            <a href="https://opensea.io/collection/apes-bunitori-evolution/overview" target="_blank">
+                <img src="images/25.png" alt="Apes Bunitori Evolution">
+            </a>
+            <p><a href="colectie3.html" style="text-decoration: none; color: #333;">Apes Bunitori Evolution</a></p>
         </div>
         <!-- Apes Bunitori Gold Club -->
         <div class="collection-link">
@@ -270,9 +292,98 @@
             <p><a href="colectie8.html" style="text-decoration: none; color: #333;">Ape UEFA Champions League</a></p>
         </div>
     </div>
-
     <footer>
         &copy; 2023-2025 NFT Collections
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        // Contract details
+        const contractAddress = "0x629077BB7190D751fAD5956fE44295012F954aa5"; // Replace with your smart contract address
+        const contractABI = [
+            // Replace with your contract's ABI
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "mintNFT",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            }
+        ];
+
+        let web3;
+        let contract;
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    web3 = new Web3(window.ethereum);
+                    contract = new web3.eth.Contract(contractABI, contractAddress);
+                    console.log("Wallet connected and contract initialized.");
+                } catch (error) {
+                    console.error("User denied wallet connection", error);
+                }
+            } else {
+                alert("Please install MetaMask to interact with this feature.");
+            }
+        }
+
+        async function mintNFT() {
+            if (!web3) {
+                alert("Please connect your wallet first.");
+                return;
+            }
+
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const account = accounts[0];
+                const mintPrice = web3.utils.toWei("0.05", "ether"); // Replace with your mint price
+
+                const receipt = await contract.methods.mintNFT().send({
+                    from: account,
+                    value: mintPrice
+                });
+
+                console.log("Transaction successful", receipt);
+                alert("Minting successful! Transaction hash: " + receipt.transactionHash);
+            } catch (error) {
+                console.error("Error minting NFT", error);
+                alert("Minting failed. See console for details.");
+            }
+        }
+
+        document.getElementById('mintButton').addEventListener('click', async (e) => {
+            e.preventDefault();
+            await connectWallet();
+            await mintNFT();
+        });
+
+        // Countdown Timer
+        const countdownElement = document.getElementById('countdown');
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 7); // Set target date 7 days from now
+
+        function updateCountdown() {
+            const now = new Date();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                countdownElement.textContent = "The collection has launched!";
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
