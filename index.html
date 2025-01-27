@@ -148,6 +148,12 @@
             font-weight: bold;
         }
 
+        .navbar-right {
+            margin-left: auto;
+            display: flex;
+            gap: 20px;
+        }
+
         .mint-button {
             display: inline-block;
             background-color: #d4af37;
@@ -165,74 +171,45 @@
         .mint-button:hover {
             background-color: #b8860b;
         }
-
-        /* Centered Section */
-        .center-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .center-content img {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 15px;
-        }
-
-        #countdown {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 10px;
-            color: #333;
-        }
     </style>
 </head>
 <body>
     <!-- Navigation bar -->
     <nav class="navbar">
-        <a href="index.html">Home</a>
-        <div class="dropdown">
-            <a href="#">Collections</a>
-            <div class="dropdown-content">
-                <a href="colectie1.html">BredApeYuriClub</a>
-                <a href="colectie3.html">Apes Bunitori Evolution</a>
-                <a href="colectie2.html">Apes Apes Bunitori Club</a>
-                <a href="colectie4.html">Apes Bunitori Gold Club</a>
-                <a href="colectie5.html">Apes Bunitori Premium</a>
-                <a href="colectie6.html">Apes Bunitori Christmas Club</a>
-                <a href="colectie7.html">Apes Bunitori Limited Edition</a>
-                <a href="colectie8.html">Ape UEFA Champions League</a>
-            </div>
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <a href="#">Collections</a>
+        <div class="dropdown-content">
+            <a href="colectie1.html">BredApeYuriClub</a>
+            <a href="colectie3.html">Apes Bunitori Evolution</a>
+            <a href="colectie2.html">Apes Apes Bunitori Club</a>
+            <a href="colectie4.html">Apes Bunitori Gold Club</a>
+            <a href="colectie5.html">Apes Bunitori Premium</a>
+            <a href="colectie6.html">Apes Bunitori Christmas Club</a>
+            <a href="colectie7.html">Apes Bunitori Limited Edition</a>
+            <a href="colectie8.html">Ape UEFA Champions League</a>
         </div>
-        <div class="navbar-right">
-            <a href="buy.html" class="buy-nft-button">Buy Apes Bunitori Club</a>
-            <a href="https://x.com/BradApeYuriClub" target="_blank">
-                <img src="images/twitter-logo.png" alt="Twitter">Twitter
-            </a>
-            <a href="https://opensea.io" target="_blank">
-                <img src="images/opensea-logo.png" alt="OpenSea">OpenSea
-            </a>
-        </div>
-    </nav>
+    </div>
+    <div class="navbar-right">
+         <!-- Buy NFT Button -->
+        <a href="buy.html" class="buy-nft-button">Buy Apes Bunitori Club</a>
+        </a>
+        <a href="https://x.com/BradApeYuriClub" target="_blank">
+            <img src="images/twitter-logo.png" alt="Twitter">Twitter
+        </a>
+        <a href="https://opensea.io" target="_blank">
+            <img src="images/opensea-logo.png" alt="OpenSea">OpenSea
+        </a>
+        
+    </div>
+</nav>
+
 
     <!-- Background Video -->
     <video autoplay muted loop class="background-image">
         <source src="images/ab.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-
-    <!-- Centered Content -->
-    <div class="center-content">
-        <img src="images/coming-soon.png" alt="Upcoming Collection">
-        <a href="#" class="mint-button">Mint Your NFT</a>
-        <div id="countdown">Loading...</div>
-    </div>
 
     <!-- Homepage -->
     <div class="homepage">
@@ -243,19 +220,19 @@
             </a>
             <p><a href="colectie1.html" style="text-decoration: none; color: #333;">BredApeYuriClub</a></p>
         </div>
+         <!-- Apes Bunitori Evolution -->
+        <div class="collection-link">
+            <a href="https://opensea.io/collection/apes-bunitori-evolution/overview" target="_blank">
+                <img src="images/25.png" alt="Apes Bunitori Evolution">
+            </a>
+            <p><a href="colectie3.html" style="text-decoration: none; color: #333;">Apes Bunitori Evolution</a></p>
+        </div>
         <!-- Apes Bunitori Club -->
         <div class="collection-link">
             <a href="https://opensea.io/collection/apes-bunitori-club?tab=items" target="_blank">
                 <img src="images/abc.png" alt="Apes Bunitori Club">
             </a>
             <p><a href="colectie2.html" style="text-decoration: none; color: #333;">Apes Bunitori Club</a></p>
-        </div>
-        <!-- Apes Bunitori Evolution -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-evolution/overview" target="_blank">
-                <img src="images/25.png" alt="Apes Bunitori Evolution">
-            </a>
-            <p><a href="colectie3.html" style="text-decoration: none; color: #333;">Apes Bunitori Evolution</a></p>
         </div>
         <!-- Apes Bunitori Gold Club -->
         <div class="collection-link">
@@ -294,63 +271,8 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
-        &copy; 2023-2025 NFT Collections.
+        &copy; 2023-2025 NFT Collections
     </footer>
-
-    <!-- Include Web3.js -->
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
-
-    <!-- Custom Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Verifică dacă MetaMask este disponibil
-            if (window.ethereum) {
-                window.web3 = new Web3(window.ethereum);
-            } else {
-                alert("MetaMask nu este instalat.");
-            }
-
-            const mintButton = document.querySelector('.mint-button');
-            
-            // Adresa și ABI-ul contractului tău
-            const contractAddress = "0xYourContractAddress";  // înlocuiește cu adresa contractului tău
-            const contractABI = [
-                // ABI-ul tău aici
-            ];
-
-            // Creează o instanță a contractului
-            const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-            // Funcția care se va apela la click pe butonul de mint
-            mintButton.addEventListener('click', async function() {
-                try {
-                    // Solicitați acces la contul MetaMask
-                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                    const userAddress = accounts[0];  // Adresa utilizatorului
-
-                    // Verificăm dacă utilizatorul este conectat
-                    if (!userAddress) {
-                        alert("Conectează-te la MetaMask.");
-                        return;
-                    }
-
-                    // Apelează funcția de mint
-                    const mintTransaction = await contract.methods.mint(userAddress).send({
-                        from: userAddress
-                    });
-
-                    // Afișează tranzacția în consola
-                    console.log('NFT Minted:', mintTransaction);
-
-                    alert("NFT-ul a fost mințuit cu succes!");
-                } catch (error) {
-                    console.error("Eroare la minting:", error);
-                    alert("A apărut o eroare. Încearcă din nou.");
-                }
-            });
-        });
-    </script>
 </body>
 </html>
