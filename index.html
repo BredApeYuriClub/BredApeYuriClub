@@ -3,294 +3,1039 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFT Collections</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap" rel="stylesheet">
+    <title>BredApeYuriClub | NFT Collections Hub</title>
+    <!-- Modern Web3 Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-color: #ffe8d6;
-            color: #333;
-            position: relative;
-            min-height: 100vh;
+            padding: 0;
         }
 
-        /* Navigation bar */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080b11;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Background Video Overlay */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.12;
+            filter: blur(8px);
+        }
+
+        /* Modern Navbar */
         .navbar {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
-            background-color: #4d2be7;
-            padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            gap: 20px;
+            padding: 1.2rem 6%;
+            background: rgba(12, 16, 26, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .navbar a {
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
-            color: white;
-            font-size: 18px;
+        }
+
+        .nav-links {
             display: flex;
             align-items: center;
-            font-weight: bold;
+            gap: 24px;
         }
 
-        .navbar a img {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
         }
 
-        .navbar a:hover {
-            text-decoration: underline;
+        .nav-links a:hover {
+            color: #ffffff;
         }
 
+        /* Dropdown Menu */
         .dropdown {
             position: relative;
-            display: inline-block;
         }
 
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: white;
-            min-width: 100px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 5px;
+            top: 100%;
+            left: 0;
+            background: #10141f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            min-width: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            padding: 10px 0;
+            z-index: 100;
         }
 
         .dropdown-content a {
-            color: #333;
-            padding: 10px 15px;
-            text-decoration: none;
+            padding: 10px 18px;
             display: block;
-            font-weight: normal;
+            color: #cbd5e1;
+            font-size: 0.85rem;
         }
 
         .dropdown-content a:hover {
-            background-color: #ffe0b2;
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        .navbar-right {
-            margin-left: auto;
+        .social-icons img {
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+            opacity: 0.8;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .social-icons img:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .btn-mint-primary {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #ffffff !important;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+
+        .btn-mint-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
+        }
+
+        /* Hero Banner Section */
+        .hero {
+            padding: 60px 20px 40px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .stats-grid {
             display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+
+        .stat-item h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: #818cf8;
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        /* Search & Filter Bar */
+        .filter-section {
+            max-width: 1600px;
+            margin: 20px auto 30px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: #fff;
+            width: 300px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .search-bar::placeholder {
+            color: #64748b;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tag.active, .tag:hover {
+            background: #6366f1;
+            color: #ffffff;
+            border-color: #6366f1;
+        }
+
+        /* Main Container & Grid */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            flex: 1;
+        }
+
+        .section-header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Grid setat la 5 coloane */
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); 
             gap: 20px;
         }
 
-        /* Homepage */
-        .homepage {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 60px;
-            padding: 10px;
+        /* Responsive Layout */
+        @media (max-width: 1400px) {
+            .collections-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (max-width: 1024px) {
+            .collections-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .collections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .collection-link {
-            text-align: center;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Modern Card Design */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            width: 220px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
-        .background-image {
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(129, 140, 248, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .card-img-wrapper img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: auto;
-            max-width: 2000px;
-            max-height: 834px;
-            z-index: -1;
-            opacity: 0.2;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .collection-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .card:hover .card-img-wrapper img {
+            transform: scale(1.08);
         }
 
-        .collection-link img {
-            width: 220px;
-            height: 160px;
-            object-fit: cover;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .collection-link p {
-            padding: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #4d2be7;
-        }
-
-        footer {
+        .card-badge {
             position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            padding: 10px;
-            background-color: #4d2be7;
-            color: white;
-            font-weight: bold;
+            top: 10px;
+            right: 10px;
+            background: rgba(12, 16, 26, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #38bdf8;
         }
 
-        .mint-button {
-            display: inline-block;
-            background-color: #d4af37;
-            color: white;
-            padding: 12px 25px;
-            margin-top: 20px;
-            text-decoration: none;
+        .card-badge.vip {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .card-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #f8fafc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Card Live Stats Bar */
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.25);
             border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
+            padding: 8px 6px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .mint-button:hover {
-            background-color: #b8860b;
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 0.65rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-box strong {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            font-weight: 700;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background: #6366f1;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 20px;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .feature-box h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+            color: #f8fafc;
+        }
+
+        .feature-box p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #05070a;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 20px 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation bar -->
+
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay muted loop class="background-video">
+            <source src="images/ab.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Navigation Header -->
     <nav class="navbar">
-        <a href="index.html">Home</a>
-        <div class="dropdown">
-            <a href="#">Collections</a>
-            <div class="dropdown-content">
-                <a href="colectie0.html">Ape Boltadori Club</a>
-                <a href="colectie1.html">BredApeYuriClub</a>
-                <a href="colectie3.html">Apes Bunitori Evolution</a>
-                <a href="colectie2.html">Apes Apes Bunitori Club</a>
-                <a href="colectie4.html">Apes Bunitori Gold Club</a>
-                <a href="colectie5.html">Apes Bunitori Premium</a>
-                <a href="colectie6.html">Apes Bunitori Christmas Club</a>
-                <a href="colectie7.html">Apes Bunitori Limited Edition</a>
-                <a href="colectie8.html">Ape UEFA Champions League</a>
+        <a href="index.html" class="logo">BredApeYuriClub</a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            
+            <div class="dropdown">
+                <a href="#">Collections (15) ▾</a>
+                <div class="dropdown-content">
+                    <a href="colectie1.html">1. Apes Bunitori Club [VIP]</a>
+                    <a href="colectie2.html">2. BlazeEntity [VIP]</a>
+                    <a href="colectie3.html">3. Bonatori</a>
+                    <a href="colectie4.html">4. BredApeYuriClub</a>
+                    <a href="colectie5.html">5. Apes Bunitori Evolution</a>
+                    <a href="colectie6.html">6. Ape Boltadori Club</a>
+                    <a href="colectie7.html">7. Apes The Eternal Brotherhood</a>
+                    <a href="colectie8.html">8. Apes Bunitori Premium</a>
+                    <a href="colectie9.html">9. Apes Bunitori Gold Club</a>
+                    <a href="colectie10.html">10. Bred Ape Yuri</a>
+                    <a href="colectie11.html">11. Apes Bunitori Limited Edition</a>
+                    <a href="colectie12.html">12. Apes Bunitori Christmas Club</a>
+                    <a href="colectie13.html">13. Apes Bunitori Dimension Base</a>
+                    <a href="colectie14.html">14. Apes Bunitori Dimension Club</a>
+                    <a href="colectie15.html">15. Apes Robinhood Hoodie</a>
+                </div>
             </div>
-        </div>
-        <div class="navbar-right">
-            <!-- Buy NFT Button -->
-            <a href="buy.html" class="buy-nft-button">Buy Apes Bunitori Club</a>
 
-            <a href="https://x.com/BradApeYuriClub" target="_blank">
-                <img src="images/twitter-logo.png" alt="Twitter">Twitter
+            <a href="https://x.com/BradApeYuriClub" target="_blank" class="social-icons">
+                <img src="images/twitter-logo.png" alt="Twitter">
             </a>
-            <a href="https://opensea.io/BredApeYuriClub/created" target="_blank">
-                <img src="images/opensea-logo.png" alt="OpenSea">OpenSea
+            <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="social-icons">
+                <img src="images/opensea-logo.png" alt="OpenSea Profile">
             </a>
-            <!-- SVG Download -->
-            <a href="https://raw.githubusercontent.com/BredApeYuriClub/BredApeYuriClub/main/images/logo-32x32.svg" download="BredApeYuriClubLogo">
-    <img src="https://raw.githubusercontent.com/BredApeYuriClub/BredApeYuriClub/main/images/logo-32x32.svg" alt="Logo" style="width:20px; height:20px; margin-right:5px;">
-    Logo
-    </a>
 
+            <a href="https://opensea.io/BredApeYuriClub/created" class="btn-mint-primary">Mint Now</a>
         </div>
     </nav>
 
-    <!-- Background Video -->
-    <video autoplay muted loop class="background-image">
-        <source src="images/ab.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- Hero Banner Section -->
+    <section class="hero">
+        <h1>Official NFT Marketplace</h1>
+        <p>Explore all 15 official Web3 collections created by BredApeYuriClub. Live OpenSea statistics and direct minting channels.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h2>15</h2>
+                <p>Collections</p>
+            </div>
+            <div class="stat-item">
+                <h2>157+ ETH</h2>
+                <p>Total Volume</p>
+            </div>
+            <div class="stat-item">
+                <h2>54,000+</h2>
+                <p>Total Items</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Homepage -->
-    <div class="homepage">
-        <!-- Ape Boltadori Club -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/ape-boltadori-club/overview" target="_blank">
-                <img src="images/66.png" alt="Ape Boltadori Club">
-            </a>
-            <p><a href="colectie0.html" style="text-decoration: none; color: #333;">Ape Boltadori Club</a></p>
-        </div>
-        <!-- BredApeYuriClub -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/bredapeyuriclub/overview" target="_blank">
-                <img src="images/placeholder1.png" alt="BredApeYuriClub">
-            </a>
-            <p><a href="colectie1.html" style="text-decoration: none; color: #333;">BredApeYuriClub</a></p>
-        </div> 
-        <!-- Apes Bunitori Evolution -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-evolution/overview" target="_blank">
-                <img src="images/25.png" alt="Apes Bunitori Evolution">
-            </a>
-            <p><a href="colectie3.html" style="text-decoration: none; color: #333;">Apes Bunitori Evolution</a></p>
-        </div>
-        <!-- Apes Bunitori Club -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-club?tab=items" target="_blank">
-                <img src="images/abc.png" alt="Apes Bunitori Club">
-            </a>
-            <p><a href="colectie2.html" style="text-decoration: none; color: #333;">Apes Bunitori Club</a></p>
-        </div>
-        <!-- Apes Bunitori Gold Club -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-gold-club/overview" target="_blank">
-                <img src="images/placeholder4.png" alt="Apes Bunitori Gold Club">
-            </a>
-            <p><a href="colectie4.html" style="text-decoration: none; color: #333;">Apes Bunitori Gold Club</a></p>
-        </div>
-        <!-- Apes Bunitori Premium -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-premium/overview" target="_blank">
-                <img src="images/107.png" alt="Apes Bunitori Premium">
-            </a>
-            <p><a href="colectie5.html" style="text-decoration: none; color: #333;">Apes Bunitori Premium</a></p>
-        </div>
-        <!-- Apes Bunitori Christmas Club -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-christmas-club/overview" target="_blank">
-                <img src="images/placeholder6.png" alt="Apes Bunitori Christmas Club">
-            </a>
-            <p><a href="colectie6.html" style="text-decoration: none; color: #333;">Apes Bunitori Christmas Club</a></p>
-        </div>
-        <!-- Apes Bunitori Limited Edition -->
-        <div class="collection-link">
-            <a href="https://opensea.io/collection/apes-bunitori-limited-edition/overview" target="_blank">
-                <img src="images/placeholder7.png" alt="Apes Bunitori Limited Edition">
-            </a>
-            <p><a href="colectie7.html" style="text-decoration: none; color: #333;">Apes Bunitori Limited Edition</a></p>
+    <!-- Search & Filters -->
+    <div class="filter-section">
+        <input type="text" class="search-bar" placeholder="Search collections...">
+        <div class="filter-tags">
+            <span class="tag active">All (15)</span>
+            <span class="tag">VIP Passes</span>
+            <span class="tag">Top Volume</span>
+            <span class="tag">Dimension Series</span>
         </div>
     </div>
 
-  <footer>
-    &copy; 2023-2026 NFT Collections<br>
+    <!-- Main Grid Container -->
+    <main class="container">
+        <div class="section-header">
+            <span>🔥</span> Featured Collections
+        </div>
 
-    <!-- Email -->
-    Contact: <a href="mailto:bredapeyuriclub@gmail.com" style="color:white; text-decoration:underline;">bredapeyuriclub@gmail.com</a><br>
+        <div class="collections-grid">
 
-    <!-- Social Links -->
-    Discord: <a href="https://discord.gg/BtYzJhkB" style="color:white; text-decoration:underline;">https://discord.gg/BtYzJhkB</a><br>
+            <!-- 1. Apes Bunitori Club [VIP] -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge vip">VIP</span>
+                    <img src="images/abc.png" alt="Apes Bunitori Club">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Apes Bunitori Club</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0022 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>67.76 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>1,705</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie1.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
 
-  </footer>
+            <!-- 2. BlazeEntity [VIP] -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge vip">VIP</span>
+                    <img src="images/blaze.png" alt="BlazeEntity">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">BlazeEntity</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.003 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>38.02 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>591</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie2.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/blazeentity" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Bonatori -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge">Popular</span>
+                    <img src="images/bonatori.png" alt="Bonatori">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Bonatori</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0024 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>25.19 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>565</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie3.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/bonatori" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. BredApeYuriClub -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge">Genesis</span>
+                    <img src="images/placeholder.png" alt="BredApeYuriClub">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">BredApeYuriClub</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0006 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>10.93 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>1,133</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie4.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/bredapeyuriclub" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Apes Bunitori Evolution -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/25.png" alt="Apes Bunitori Evolution">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Apes Evolution</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.25 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>7.79 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>131</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie5.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-evolution" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Ape Boltadori Club -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/boltadori.png" alt="Ape Boltadori Club">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Ape Boltadori Club</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0083 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>6.82 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>1,009</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie6.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/ape-boltadori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Apes The Eternal Brotherhood -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/brotherhood.png" alt="Apes The Eternal Brotherhood">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Eternal Brotherhood</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>—</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.72 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>111</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie7.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-the-eternal-brotherhood" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Apes Bunitori Premium -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/premium.png" alt="Apes Bunitori Premium">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Apes Premium</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.007 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.46 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>104</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie8.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-premium" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Apes Bunitori Gold Club -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge">Gold</span>
+                    <img src="images/gold.png" alt="Apes Bunitori Gold Club">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Apes Gold Club</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0125 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.40 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>121</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie9.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-gold-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Bred Ape Yuri -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/bay.png" alt="Bred Ape Yuri">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Bred Ape Yuri</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0007 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.37 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>233</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie10.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/bred-ape-yuri" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Apes Bunitori Limited Edition -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <span class="card-badge">Rare</span>
+                    <img src="images/boos.png" alt="Apes Bunitori Limited Edition">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Limited Edition</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.149 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.04 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>65</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie11.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-limited-edition" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. Apes Bunitori Christmas Club -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/Christmas.png" alt="Apes Bunitori Christmas Club">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Christmas Club</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>5.38 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.01 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>104</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie12.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-christmas-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. Apes Bunitori Dimension Base -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/dim-base.png" alt="Apes Bunitori Dimension Base">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Dimension Base</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.001 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.05 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>88</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie13.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-dimension-base" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. Apes Bunitori Dimension Club -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/dim-club.png" alt="Apes Bunitori Dimension Club">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Dimension Club</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.002 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.08 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>95</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie14.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-dimension-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. Apes Robinhood Hoodie -->
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="images/robinhood.png" alt="Apes Robinhood Hoodie">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Robinhood Hoodie</h3>
+                    <div class="card-stats">
+                        <div class="stat-box">
+                            <span>Floor</span>
+                            <strong>0.0015 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Volume</span>
+                            <strong>0.03 ETH</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Owners</span>
+                            <strong>72</strong>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="colectie15.html" class="card-btn btn-secondary">Details</a>
+                        <a href="https://opensea.io/collection/apes-robinhood-hoodie" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">BredApeYuriClub</div>
+            <div>Official NFT Marketplace Hub</div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 BredApeYuriClub. All rights reserved.
+        </div>
+    </footer>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
