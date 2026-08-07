@@ -1005,14 +1005,17 @@
         <h3 class="card-title">Apes Robinhood Hoodie</h3>
         <div class="card-stats">
             <div class="stat-box"><span>Status</span><strong style="color: #ec4899;">NEW Launch</strong></div>
-            <div class="stat-box"><span>Date</span><strong>In 4 days</strong></div>
+            <div class="stat-box"><span>Time Left</span><strong id="countdown" style="color: #38bdf8;">Loading...</strong></div>
         </div>
         <div class="card-actions">
             <a href="colectie15.html" class="card-btn btn-secondary">Details</a>
             <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="card-btn btn-primary" style="background: linear-gradient(135deg, #ec4899, #a855f7);">OpenSea</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
 
         </div>
     </main>
@@ -1027,6 +1030,33 @@
             &copy; 2026 BredApeYuriClub. All rights reserved.
         </div>
     </footer>
+<script>
+    // Data de lansare din setările OpenSea: 12 August 2026, 10:00 AM GMT+3
+    const targetDate = new Date("2026-08-12T10:00:00+03:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference <= 0) {
+            document.getElementById("countdown").innerText = "LIVE NOW!";
+            document.getElementById("countdown").style.color = "#22c55e"; // Verde când începe mint-ul
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Afișează formatul: "4d 09h 57m 20s"
+        document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
