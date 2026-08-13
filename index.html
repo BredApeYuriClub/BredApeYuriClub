@@ -23,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Video Overlay */
         .video-container {
             position: fixed;
             top: 0;
@@ -42,7 +41,6 @@
             filter: blur(8px);
         }
 
-        /* Modern Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -85,7 +83,6 @@
             color: #ffffff;
         }
 
-        /* Dropdown Menu */
         .dropdown {
             position: relative;
         }
@@ -150,7 +147,6 @@
             box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
         }
 
-        /* Hero Banner Section */
         .hero {
             padding: 60px 20px 40px;
             text-align: center;
@@ -171,7 +167,7 @@
 
         .hero p {
             color: #94a3b8;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             line-height: 1.6;
             margin-bottom: 35px;
         }
@@ -200,7 +196,6 @@
             margin-bottom: 0;
         }
 
-        /* Search & Filter Bar */
         .filter-section {
             max-width: 1600px;
             margin: 20px auto 30px;
@@ -251,7 +246,6 @@
             border-color: #6366f1;
         }
 
-        /* Main Container & Grid */
         .container {
             max-width: 1600px;
             margin: 0 auto;
@@ -268,36 +262,17 @@
             gap: 12px;
         }
 
-        /* Grid setat la 5 coloane */
         .collections-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr); 
             gap: 20px;
         }
 
-        /* Responsive Layout */
-        @media (max-width: 1400px) {
-            .collections-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        @media (max-width: 1024px) {
-            .collections-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media (max-width: 768px) {
-            .collections-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 480px) {
-            .collections-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 1400px) { .collections-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 1024px) { .collections-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .collections-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .collections-grid { grid-template-columns: 1fr; } }
 
-        /* Modern Card Design */
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -317,7 +292,7 @@
         .card-img-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio */
+            padding-top: 100%;
             overflow: hidden;
         }
 
@@ -347,6 +322,7 @@
             font-size: 0.75rem;
             font-weight: 700;
             color: #38bdf8;
+            z-index: 2;
         }
 
         .card-badge.vip {
@@ -374,7 +350,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Card Live Stats Bar */
         .card-stats {
             display: flex;
             justify-content: space-between;
@@ -439,67 +414,12 @@
             background: #4f46e5;
         }
 
-        /* Features Section */
-        .features-section {
-            background: rgba(255, 255, 255, 0.01);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 60px 20px;
-            margin-bottom: 60px;
-        }
-
-        .features-grid {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-        }
-
-        .feature-box h3 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 15px 0 10px;
-            font-size: 1.2rem;
-            color: #f8fafc;
-        }
-
-        .feature-box p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-        }
-
-        /* Footer */
         footer {
             background: #05070a;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 40px 20px 20px;
             color: #64748b;
             font-size: 0.9rem;
-        }
-
-        .footer-content {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer-copyright {
@@ -511,14 +431,12 @@
 </head>
 <body>
 
-    <!-- Background Video -->
     <div class="video-container">
         <video autoplay muted loop class="background-video">
             <source src="images/ab.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Navigation Header -->
     <nav class="navbar">
         <a href="index.html" class="logo">BredApeYuriClub</a>
         
@@ -553,14 +471,13 @@
                 <img src="images/opensea-logo.png" alt="OpenSea Profile">
             </a>
 
-            <a href="https://opensea.io/collection/apes-bunitori-club/overview" class="btn-mint-primary">Mint Now</a>
+            <a href="https://opensea.io/BredApeYuriClub/created" class="btn-mint-primary">Mint Now</a>
         </div>
     </nav>
 
-    <!-- Hero Banner Section -->
     <section class="hero">
         <h1>Official NFT Marketplace</h1>
-        <p>Welcome to Apes Bunitori Club Your Ultimate Lifetime Pass to our entire ecosystem. 🚀 Holder Utility: Hold 1 Apes Bunitori Club NFT FREE MINTS on ALL future collections. No deadlines, no whitelists covered for life..</p>
+        <p><strong>Welcome to Apes Bunitori Club</strong><br>Your Ultimate Lifetime Pass to our entire ecosystem. 🚀 <strong>Holder Utility:</strong> Hold 1 Apes Bunitori Club NFT <strong>FREE MINTS on ALL future collections</strong>. No deadlines, no whitelists covered for life.</p>
         
         <div class="stats-grid">
             <div class="stat-item">
@@ -579,22 +496,21 @@
     </section>
 
     <!-- Banner Lansare Exclusivă -->
-<div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
-    <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-        <img src="images/robinhood.png" alt="Robinhood Hoodie" style="width: 120px; height: 120px; border-radius: 12px; object-fit: cover;">
-        <div style="flex: 1;">
-            <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">UPCOMING DROP</span>
-            <h2 style="font-size: 1.5rem; margin: 8px 0;">Apes Robinhood Hoodie</h2>
-            <p style="color: #cbd5e1; font-size: 0.9rem;">Minting starts in: <strong id="countdown" style="color: #38bdf8; font-size: 1.1rem;">Loading...</strong></p>
-        </div>
-        <div>
-            <a href="colectie15.html" class="card-btn btn-secondary" style="padding: 10px 20px; margin-right: 10px;">Details</a>
-            <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="card-btn btn-primary" style="padding: 10px 20px; background: linear-gradient(135deg, #ec4899, #a855f7);">Mint Now</a>
+    <div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
+        <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <img src="images/robinhood.png" alt="Robinhood Hoodie" style="width: 120px; height: 120px; border-radius: 12px; object-fit: cover;">
+            <div style="flex: 1;">
+                <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">Minting now</span>
+                <h2 style="font-size: 1.5rem; margin: 8px 0;">Apes Robinhood Hoodie</h2>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">Minting starts in: <strong id="countdown" style="color: #38bdf8; font-size: 1.1rem;">Minting now</strong></p>
+            </div>
+            <div>
+                <a href="colectie15.html" class="card-btn btn-secondary" style="padding: 10px 20px; margin-right: 10px;">Details</a>
+                <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="card-btn btn-primary" style="padding: 10px 20px; background: linear-gradient(135deg, #ec4899, #a855f7);">Minting now</a>
+            </div>
         </div>
     </div>
-</div>
-    
-    <!-- Search & Filters -->
+
     <div class="filter-section">
         <input type="text" class="search-bar" placeholder="Search collections...">
         <div class="filter-tags">
@@ -605,7 +521,6 @@
         </div>
     </div>
 
-    <!-- Main Grid Container -->
     <main class="container">
         <div class="section-header">
             <span>🔥</span> Featured Collections
@@ -613,55 +528,55 @@
 
         <div class="collections-grid">
 
-            <!-- 1. Apes Bunitori Club [VIP] -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <span class="card-badge vip">VIP</span>
-                    <img src="images/abc.png" alt="Apes Bunitori Club">
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">Apes Bunitori Club</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong>0.0022 ETH</strong>
-                        </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong>67.76 ETH</strong>
-                        </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong>1,705</strong>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="colectie1.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
-                    </div>
-                </div>
+            <!-- 1. Apes Bunitori Club -->
+<div class="card" data-slug="apes-bunitori-club">
+    <div class="card-img-wrapper">
+        <span class="card-badge vip">VIP</span>
+        <img src="images/abc.png" alt="Apes Bunitori Club">
+    </div>
+    <div class="card-body">
+        <h3 class="card-title">Apes Bunitori Club</h3>
+        <div class="card-stats">
+            <div class="stat-box">
+                <span>Floor</span>
+                <strong class="stat-floor">Loading...</strong>
             </div>
+            <div class="stat-box">
+                <span>Volume</span>
+                <strong class="stat-volume">Loading...</strong>
+            </div>
+            <div class="stat-box">
+                <span>Owners</span>
+                <strong class="stat-owners">Loading...</strong>
+            </div>
+        </div>
+        <div class="card-actions">
+            <a href="colectie1.html" class="card-btn btn-secondary">Details</a>
+            <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+        </div>
+    </div>
+</div>
 
-            <!-- 2. BlazeEntity [VIP] -->
-            <div class="card">
+            <!-- 2. BlazeEntity -->
+            <div class="card" data-slug="blazeentity">
                 <div class="card-img-wrapper">
                     <span class="card-badge vip">VIP</span>
-                    <img src="images/Blaze.png" alt="BlazeEntity">
+                    <img src="images/blaze.png" alt="BlazeEntity">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">BlazeEntity</h3>
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.003 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>38.02 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>591</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -672,7 +587,7 @@
             </div>
 
             <!-- 3. Bonatori -->
-            <div class="card">
+            <div class="card" data-slug="bonatori">
                 <div class="card-img-wrapper">
                     <span class="card-badge">Popular</span>
                     <img src="images/bonatori.png" alt="Bonatori">
@@ -682,15 +597,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.0024 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>25.19 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>565</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -701,7 +616,7 @@
             </div>
 
             <!-- 4. BredApeYuriClub -->
-            <div class="card">
+            <div class="card" data-slug="bredapeyuriclub">
                 <div class="card-img-wrapper">
                     <span class="card-badge">Genesis</span>
                     <img src="images/placeholder.png" alt="BredApeYuriClub">
@@ -711,15 +626,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.0006 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>10.93 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>1,133</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -730,7 +645,7 @@
             </div>
 
             <!-- 5. Apes Bunitori Evolution -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-evolution">
                 <div class="card-img-wrapper">
                     <img src="images/25.png" alt="Apes Bunitori Evolution">
                 </div>
@@ -739,15 +654,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.25 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>7.79 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>131</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -758,7 +673,7 @@
             </div>
 
             <!-- 6. Ape Boltadori Club -->
-            <div class="card">
+            <div class="card" data-slug="ape-boltadori-club">
                 <div class="card-img-wrapper">
                     <img src="images/boltadori.png" alt="Ape Boltadori Club">
                 </div>
@@ -767,15 +682,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.0083 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>6.82 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>1,009</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -786,7 +701,7 @@
             </div>
 
             <!-- 7. Apes The Eternal Brotherhood -->
-            <div class="card">
+            <div class="card" data-slug="apes-the-eternal-brotherhood">
                 <div class="card-img-wrapper">
                     <img src="images/brotherhood.png" alt="Apes The Eternal Brotherhood">
                 </div>
@@ -795,15 +710,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>—</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.72 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>111</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -814,7 +729,7 @@
             </div>
 
             <!-- 8. Apes Bunitori Premium -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-premium">
                 <div class="card-img-wrapper">
                     <img src="images/premium.png" alt="Apes Bunitori Premium">
                 </div>
@@ -823,15 +738,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.007 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.46 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>104</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -842,7 +757,7 @@
             </div>
 
             <!-- 9. Apes Bunitori Gold Club -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-gold-club">
                 <div class="card-img-wrapper">
                     <span class="card-badge">Gold</span>
                     <img src="images/gold.png" alt="Apes Bunitori Gold Club">
@@ -852,15 +767,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.0125 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.40 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>121</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -871,7 +786,7 @@
             </div>
 
             <!-- 10. Bred Ape Yuri -->
-            <div class="card">
+            <div class="card" data-slug="bred-ape-yuri">
                 <div class="card-img-wrapper">
                     <img src="images/bay.png" alt="Bred Ape Yuri">
                 </div>
@@ -880,15 +795,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.0007 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.37 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>233</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -899,7 +814,7 @@
             </div>
 
             <!-- 11. Apes Bunitori Limited Edition -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-limited-edition">
                 <div class="card-img-wrapper">
                     <span class="card-badge">Rare</span>
                     <img src="images/boos.png" alt="Apes Bunitori Limited Edition">
@@ -909,15 +824,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.149 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.04 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>65</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -928,24 +843,25 @@
             </div>
 
             <!-- 12. Apes Bunitori Christmas Club -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-christmas-club">
                 <div class="card-img-wrapper">
-                    <img src="images/Christmas.png" alt="Apes Bunitori Christmas Club">
+                    <span class="card-badge">Seasonal</span>
+                    <img src="images/christmas.png" alt="Apes Bunitori Christmas Club">
                 </div>
                 <div class="card-body">
                     <h3 class="card-title">Christmas Club</h3>
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>5.38 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.01 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>104</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -956,8 +872,9 @@
             </div>
 
             <!-- 13. Apes Bunitori Dimension Base -->
-            <div class="card">
+            <div class="card" data-slug="apes-bunitori-dimension">
                 <div class="card-img-wrapper">
+                    <span class="card-badge">Base</span>
                     <img src="images/dim-base.png" alt="Apes Bunitori Dimension Base">
                 </div>
                 <div class="card-body">
@@ -965,27 +882,28 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>2.00 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.13 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>147</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
                         <a href="colectie13.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-dimension/overview" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-dimension" target="_blank" class="card-btn btn-primary">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 14. Apes Bunitori Dimension Club -->
-            <div class="card">
+            <div class="card" data-slug="apes-b-dimension-club">
                 <div class="card-img-wrapper">
+                    <span class="card-badge">Dimension</span>
                     <img src="images/dim-club.png" alt="Apes Bunitori Dimension Club">
                 </div>
                 <div class="card-body">
@@ -993,15 +911,15 @@
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.18 ETH</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.24 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>2</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -1012,77 +930,114 @@
             </div>
 
             <!-- 15. Apes Robinhood Hoodie -->
-            <div class="card">
+            <div class="card" data-slug="apes-robinhood-hoodie">
                 <div class="card-img-wrapper">
-                    <span class="card-badge">New</span>
+                    <span class="card-badge">Upcoming</span>
                     <img src="images/robinhood.png" alt="Apes Robinhood Hoodie">
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">Apes Robinhood Hoodie</h3>
+                    <h3 class="card-title">Robinhood Hoodie</h3>
                     <div class="card-stats">
                         <div class="stat-box">
                             <span>Floor</span>
-                            <strong>0.025</strong>
+                            <strong class="stat-floor">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Volume</span>
-                            <strong>0.60 ETH</strong>
+                            <strong class="stat-volume">Loading...</strong>
                         </div>
                         <div class="stat-box">
                             <span>Owners</span>
-                            <strong>977</strong>
+                            <strong class="stat-owners">Loading...</strong>
                         </div>
                     </div>
                     <div class="card-actions">
                         <a href="colectie15.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-robinhood-hoodie" target="_blank" class="card-btn btn-primary">OpenSea</a>
-        </div>
-    </div>
-</div>
-        </div>
-    </div>
-</div>
+                        <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="logo">BredApeYuriClub</div>
-            <div>Official NFT Marketplace Hub</div>
-        </div>
         <div class="footer-copyright">
-            &copy; 2026 BredApeYuriClub. All rights reserved.
+            © BredApeYuriClub. All rights reserved.
         </div>
     </footer>
-<script>
-    // Data de lansare din setările OpenSea: 12 August 2026, 10:00 AM GMT+3
-    const targetDate = new Date("2026-08-12T10:00:00+03:00").getTime();
 
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const difference = targetDate - now;
+    <!-- Script OpenSea Live Data -->
+    <script>
+        const OPENSEA_API_KEY = "a2f76534f0fb42a4b9684af63b650d2e"; 
 
-        if (difference <= 0) {
-            document.getElementById("countdown").innerText = "LIVE NOW!";
-            document.getElementById("countdown").style.color = "#22c55e"; // Verde când începe mint-ul
-            clearInterval(timerInterval);
-            return;
+async function fetchCollectionStats(cardElement) {
+    const slug = cardElement.getAttribute('data-slug');
+    if (!slug) return;
+
+    const floorElem = cardElement.querySelector('.stat-floor');
+    const volumeElem = cardElement.querySelector('.stat-volume') || cardElement.querySelector('.stat-Eth');
+    const ownersElem = cardElement.querySelector('.stat-owners');
+
+    try {
+        const headers = { 'accept': 'application/json' };
+        if (OPENSEA_API_KEY && OPENSEA_API_KEY !== "CHEIA_TA_API_AICI") {
+            headers['x-api-key'] = OPENSEA_API_KEY;
         }
 
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        const response = await fetch(`https://api.opensea.io/api/v2/collections/${slug}/stats`, {
+            method: 'GET',
+            headers: headers
+        });
 
-        // Afișează formatul: "4d 09h 57m 20s"
-        document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        // --- EXTRAGERE CORECTĂ A VOLUMULUI (OpenSea v2 API) ---
+        let rawVolume = 0;
+
+        if (data.total) {
+            if (typeof data.total.volume === 'number') {
+                rawVolume = data.total.volume;
+            } else if (typeof data.total.volume === 'object' && data.total.volume !== null) {
+                // Dacă OpenSea trimite un obiect cu valuta: { ETH: 12.5 } sau { volume_eth: 12.5 }
+                rawVolume = data.total.volume.ETH 
+                         || data.total.volume.volume_eth 
+                         || data.total.volume.value 
+                         || 0;
+            }
+        } else if (data.stats) {
+            rawVolume = data.stats.total_volume || data.stats.volume || 0;
+        }
+
+        // --- EXTRAGERE FLOOR PRICE & OWNERS ---
+        let floorPrice = data?.total?.floor_price ?? data?.floor_price ?? 0;
+        let numOwners = data?.total?.num_owners ?? data?.num_owners ?? 0;
+
+        // --- AFIȘARE ÎN HTML ---
+        if (volumeElem) {
+            const numVol = parseFloat(rawVolume);
+            volumeElem.innerText = numVol > 0 ? `${numVol.toFixed(2)} ETH` : "0 ETH";
+        }
+        if (floorElem) {
+            const numFloor = parseFloat(floorPrice);
+            floorElem.innerText = numFloor > 0 ? `${numFloor.toFixed(3)} ETH` : "0 ETH";
+        }
+        if (ownersElem) {
+            ownersElem.innerText = parseInt(numOwners, 10).toLocaleString();
+        }
+
+    } catch (error) {
+        console.error(`Eroare la procesarea datelor pentru ${slug}:`, error);
     }
+}
 
-    updateCountdown();
-    const timerInterval = setInterval(updateCountdown, 1000);
-</script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card[data-slug]');
+    cards.forEach(card => fetchCollectionStats(card));
+});
+    </script>
 
 </body>
 </html>
