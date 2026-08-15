@@ -969,75 +969,105 @@
 
     <!-- Script OpenSea Live Data -->
     <script>
-        const OPENSEA_API_KEY = "a2f76534f0fb42a4b9684af63b650d2e"; 
-
-async function fetchCollectionStats(cardElement) {
-    const slug = cardElement.getAttribute('data-slug');
-    if (!slug) return;
-
-    const floorElem = cardElement.querySelector('.stat-floor');
-    const volumeElem = cardElement.querySelector('.stat-volume') || cardElement.querySelector('.stat-Eth');
-    const ownersElem = cardElement.querySelector('.stat-owners');
-
-    try {
-        const headers = { 'accept': 'application/json' };
-        if (OPENSEA_API_KEY && OPENSEA_API_KEY !== "CHEIA_TA_API_AICI") {
-            headers['x-api-key'] = OPENSEA_API_KEY;
-        }
-
-        const response = await fetch(`https://api.opensea.io/api/v2/collections/${slug}/stats`, {
-            method: 'GET',
-            headers: headers
-        });
-
-        if (!response.ok) return;
-
-        const data = await response.json();
-
-        // --- EXTRAGERE CORECTĂ A VOLUMULUI (OpenSea v2 API) ---
-        let rawVolume = 0;
-
-        if (data.total) {
-            if (typeof data.total.volume === 'number') {
-                rawVolume = data.total.volume;
-            } else if (typeof data.total.volume === 'object' && data.total.volume !== null) {
-                // Dacă OpenSea trimite un obiect cu valuta: { ETH: 12.5 } sau { volume_eth: 12.5 }
-                rawVolume = data.total.volume.ETH 
-                         || data.total.volume.volume_eth 
-                         || data.total.volume.value 
-                         || 0;
-            }
-        } else if (data.stats) {
-            rawVolume = data.stats.total_volume || data.stats.volume || 0;
-        }
-
-        // --- EXTRAGERE FLOOR PRICE & OWNERS ---
-        let floorPrice = data?.total?.floor_price ?? data?.floor_price ?? 0;
-        let numOwners = data?.total?.num_owners ?? data?.num_owners ?? 0;
-
-        // --- AFIȘARE ÎN HTML ---
-        if (volumeElem) {
-            const numVol = parseFloat(rawVolume);
-            volumeElem.innerText = numVol > 0 ? `${numVol.toFixed(2)} ETH` : "0 ETH";
-        }
-        if (floorElem) {
-            const numFloor = parseFloat(floorPrice);
-            floorElem.innerText = numFloor > 0 ? `${numFloor.toFixed(3)} ETH` : "0 ETH";
-        }
-        if (ownersElem) {
-            ownersElem.innerText = parseInt(numOwners, 10).toLocaleString();
-        }
-
-    } catch (error) {
-        console.error(`Eroare la procesarea datelor pentru ${slug}:`, error);
+  // Obiect cu datele FIXE actualizate REALE din rețea
+  const collectionData = {
+    "apes-bunitori-club": {
+        "floor": "0.003 ETH",
+        "volume": "70.06 ETH",
+        "owners": "1726"
+    },
+    "blazeentity": {
+        "floor": "0.002 ETH",
+        "volume": "38.02 ETH",
+        "owners": "591"
+    },
+    "bonatori": {
+        "floor": "0.004 ETH",
+        "volume": "25.23 ETH",
+        "owners": "569"
+    },
+    "bredapeyuriclub": {
+        "floor": "0.001 ETH",
+        "volume": "10.93 ETH",
+        "owners": "1136"
+    },
+    "apes-bunitori-evolution": {
+        "floor": "0.250 ETH",
+        "volume": "7.79 ETH",
+        "owners": "131"
+    },
+    "ape-boltadori-club": {
+        "floor": "0.008 ETH",
+        "volume": "6.82 ETH",
+        "owners": "1009"
+    },
+    "apes-the-eternal-brotherhood": {
+        "floor": "0.230 ETH",
+        "volume": "0.72 ETH",
+        "owners": "111"
+    },
+    "apes-bunitori-premium": {
+        "floor": "0.500 ETH",
+        "volume": "0.46 ETH",
+        "owners": "104"
+    },
+    "apes-bunitori-gold-club": {
+        "floor": "0.013 ETH",
+        "volume": "0.40 ETH",
+        "owners": "121"
+    },
+    "bred-ape-yuri": {
+        "floor": "0.001 ETH",
+        "volume": "0.37 ETH",
+        "owners": "233"
+    },
+    "apes-bunitori-limited-edition": {
+        "floor": "0.149 ETH",
+        "volume": "0.16 ETH",
+        "owners": "85"
+    },
+    "apes-bunitori-christmas-club": {
+        "floor": "5.380 ETH",
+        "volume": "0.01 ETH",
+        "owners": "104"
+    },
+    "apes-bunitori-dimension": {
+        "floor": "2.500 ETH",
+        "volume": "0.13 ETH",
+        "owners": "147"
+    },
+    "apes-b-dimension-club": {
+        "floor": "0.180 ETH",
+        "volume": "0.00 ETH",
+        "owners": "2"
+    },
+    "apes-robinhood-hoodie": {
+        "floor": "0.015 ETH",
+        "volume": "1.31 ETH",
+        "owners": "994"
     }
-}
+};
 
-document.addEventListener('DOMContentLoaded', () => {
+  // Funcție care populează cardurile pe baza atributului data-slug
+  document.addEventListener("DOMContentLoaded", () => {
     const cards = document.querySelectorAll('.card[data-slug]');
-    cards.forEach(card => fetchCollectionStats(card));
-});
-    </script>
+    
+    cards.forEach(card => {
+      const slug = card.getAttribute('data-slug');
+      const data = collectionData[slug];
+      
+      if (data) {
+        const floorEl = card.querySelector('.stat-floor');
+        const volumeEl = card.querySelector('.stat-volume');
+        const ownersEl = card.querySelector('.stat-owners');
+        
+        if (floorEl) floorEl.textContent = data.floor;
+        if (volumeEl) volumeEl.textContent = data.volume;
+        if (ownersEl) ownersEl.textContent = data.owners;
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
