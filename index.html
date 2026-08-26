@@ -567,22 +567,22 @@
             statusText.innerText = "Citire date contract...";
             const mintPrice = await nftContract.MINT_PRICE();
 
-            statusText.innerText = "Confirmă tranzacția în portofel...";
+            statusText.innerText = "Please confirm the transaction in your wallet...";
 
             const tx = await nftContract.mint(1, { value: mintPrice });
 
-            statusText.innerText = "Se procesează tranzacția...";
+            statusText.innerText = "Processing transaction...";
             await tx.wait();
 
-            statusText.innerText = "Mint reușit! 🎉";
+            statusText.innerText = "Mint successful! 🎉";
         } catch (error) {
             console.error(error);
             if (error.code === 4001) {
-                statusText.innerText = "Tranzacție anulată.";
+                statusText.innerText = "Transaction canceled.";
             } else if (error.message && error.message.includes("OutOfFunds")) {
-                statusText.innerText = "Fonduri insuficiente (ETH Base)!";
+                statusText.innerText = "Insufficient funds (Base ETH)!";
             } else {
-                statusText.innerText = "Eroare la tranzacție!";
+                statusText.innerText = "Transaction failed!";
             }
         }
     }
