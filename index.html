@@ -498,14 +498,20 @@
     <!-- Banner Lansare Exclusivă -->
 <div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
     <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-        <img src="images/robinhood.png" alt="Robinhood Hoodie" style="width: 120px; height: 120px; border-radius: 12px; object-fit: cover;">
+        <!-- Imaginea colecției -->
+        <img src="images/Brad.jpg" alt="Brad Bunitori Club" style="width: 120px; height: 120px; border-radius: 12px; object-fit: cover;">
+        
         <div style="flex: 1;">
             <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">NEW</span>
-            <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Apes Robinhood Hoodie</h2>
+            <!-- Numele colecției -->
+            <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Brad Bunitori Club</h2>
             <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Status: <strong id="status" style="color: #22c55e; font-size: 1.1rem;">Live now</strong></p>
         </div>
+        
         <div>
-            <a href="colectie15.html" class="card-btn btn-secondary" style="padding: 10px 20px; margin-right: 10px; text-decoration: none; display: inline-block;">Details</a>
+            <!-- Link detalii -->
+            <a href="colectie_noua.html" class="card-btn btn-secondary" style="padding: 10px 20px; margin-right: 10px; text-decoration: none; display: inline-block;">Details</a>
+            <!-- Buton Mint -->
             <button id="mintBtn" onclick="mintNFT()" class="card-btn btn-primary" style="padding: 10px 20px; background: linear-gradient(135deg, #22c55e, #16a34a); border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 8px;">Minting now</button>
         </div>
     </div>
@@ -514,11 +520,11 @@
 <!-- Biblioteca Ethers.js v5 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 
-<!-- Scriptul complet de Web3 -->
+<!-- Scriptul complet Web3 -->
 <script>
+    // Completează adresa noului smart contract dacă folosești altul
     const contractAddress = "0xfef39ba17844791d4a023d47d96cb117c125b4d0";
     
-    // ABI-ul extras din contractul tău
     const contractABI = [{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"string","name":"_initBaseURI","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"NotCompatibleWithSpotMints","type":"error"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"SequentialMintExceedsLimit","type":"error"},{"inputs":[],"name":"SequentialUpToTooSmall","type":"error"},{"inputs":[],"name":"SpotMintTokenIdTooSmall","type":"error"},{"inputs":[],"name":"TokenAlreadyExists","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"MAX_PER_TX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINT_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPaused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_newBaseURI","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"_state","type":"bool"}],"name":"setPaused","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"result","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
 
     async function mintNFT() {
@@ -532,14 +538,12 @@
         try {
             statusText.innerText = "Conectare portofel...";
 
-            // Schimbă automat rețeaua pe Base Mainnet (Chain ID 0x2105 / 8453)
             try {
                 await window.ethereum.request({
                     method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x2105' }], // 8453 în hex este 0x2105
+                    params: [{ chainId: '0x2105' }], // Base Mainnet
                 });
             } catch (switchError) {
-                // Dacă rețeaua Base nu este adăugată în portofel, o adăugăm automat
                 if (switchError.code === 4902) {
                     await window.ethereum.request({
                         method: 'wallet_addEthereumChain',
@@ -560,13 +564,11 @@
 
             const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-            // Citește prețul din contract automat (MINT_PRICE)
             statusText.innerText = "Citire date contract...";
             const mintPrice = await nftContract.MINT_PRICE();
 
             statusText.innerText = "Confirmă tranzacția în portofel...";
 
-            // Apelăm funcția de mint pentru 1 bucată
             const tx = await nftContract.mint(1, { value: mintPrice });
 
             statusText.innerText = "Se procesează tranzacția...";
@@ -577,22 +579,14 @@
             console.error(error);
             if (error.code === 4001) {
                 statusText.innerText = "Tranzacție anulată.";
+            } else if (error.message && error.message.includes("OutOfFunds")) {
+                statusText.innerText = "Fonduri insuficiente (ETH Base)!";
             } else {
                 statusText.innerText = "Eroare la tranzacție!";
             }
         }
     }
 </script>
-
-    <div class="filter-section">
-        <input type="text" class="search-bar" placeholder="Search collections...">
-        <div class="filter-tags">
-            <span class="tag active">All (15)</span>
-            <span class="tag">VIP Passes</span>
-            <span class="tag">Top Volume</span>
-            <span class="tag">Dimension Series</span>
-        </div>
-    </div>
 
     <main class="container">
         <div class="section-header">
