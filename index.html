@@ -497,36 +497,116 @@
 
     <!-- Banner Lansare Exclusivă -->
 <div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
-    <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-        <!-- Imaginea colecției -->
-        <img src="images/Brad.jpg" alt="Brad Bunitori Club" style="width: 120px; height: 120px; border-radius: 12px; object-fit: cover;">
+    <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 25px; color: #ffffff;">
         
-        <div style="flex: 1;">
-            <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">NEW 1,000 items (NFTs) Limit 5 per wallet </span>
-            <!-- Numele colecției -->
-            <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Brad Bunitori Club</h2>
-            <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Status: <strong id="status" style="color: #22c55e; font-size: 1.1rem;">Live now</strong></p>
+        <!-- Header Banner (Imagine + Detalii) -->
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+            <!-- Imaginea colecției -->
+            <img src="images/Brad.jpg" alt="Brad Bunitori Club" style="width: 100px; height: 100px; border-radius: 12px; object-fit: cover;">
+            
+            <div style="flex: 1;">
+                <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">NEW 1,000 items (NFTs) Limit 5 per wallet</span>
+                <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Brad Bunitori Club</h2>
+                <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Status: <strong id="status" style="color: #22c55e; font-size: 1.1rem;">Live now</strong></p>
+            </div>
         </div>
-        
-        <div>
-            <!-- Link detalii -->
-            <button id="mintBtn" onclick="mintNFT()" class="card-btn btn-primary" style="padding: 10px 20px; background: linear-gradient(135deg, #22c55e, #16a34a); border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 8px;">0.01 ETH BASE</button>
-            <!-- Buton Mint -->
-            <button id="mintBtn" onclick="mintNFT()" class="card-btn btn-primary" style="padding: 10px 20px; background: linear-gradient(135deg, #22c55e, #16a34a); border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 8px;">Minting now</button>
+
+        <!-- Sectiune Live Mint Counter & Progress Bar -->
+        <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;">
+                <span>Items minted</span>
+                <span style="font-weight: bold; color: #fff;"><span id="mintedAmount">0</span> / <span id="maxSupply">1000</span></span>
+            </div>
+            <!-- Progress Bar Container -->
+            <div style="width: 100%; background: rgba(255, 255, 255, 0.1); height: 10px; border-radius: 5px; overflow: hidden;">
+                <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ec4899, #3b82f6); transition: width 0.4s ease;"></div>
+            </div>
         </div>
+
+        <!-- Card Control Mint (Selector Cantitate + Buton Mint) -->
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+            <div>
+                <div style="font-size: 1.1rem; font-weight: bold; color: #fff;">Public Stage</div>
+                <div style="font-size: 0.9rem; color: #cbd5e1;"><span id="totalPriceDisplay">0.01</span> ETH <span style="color: #22c55e; font-size: 0.8rem; margin-left: 8px;">● MINTING NOW</span></div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <!-- Controller Cantitate (- 1 +) -->
+                <div style="display: flex; align-items: center; background: #1e293b; border-radius: 8px; border: 1px solid #334155; overflow: hidden;">
+                    <button onclick="changeQuantity(-1)" style="background: transparent; color: #fff; border: none; padding: 8px 16px; font-size: 1.2rem; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='transparent'">-</button>
+                    <span id="mintQuantity" style="color: #fff; font-weight: bold; padding: 0 12px;">1</span>
+                    <button onclick="changeQuantity(1)" style="background: transparent; color: #fff; border: none; padding: 8px 16px; font-size: 1.2rem; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='transparent'">+</button>
+                </div>
+
+                <!-- Buton de Mint -->
+                <button id="mintBtn" onclick="mintNFT()" class="card-btn btn-primary" style="padding: 12px 28px; background: #3b82f6; border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 25px; font-size: 1rem; transition: 0.2s;" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+                    Mint
+                </button>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <!-- Biblioteca Ethers.js v5 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 
-<!-- Scriptul complet Web3 -->
+<!-- Script Web3 & Interactivitate -->
 <script>
-    // Completează adresa noului smart contract dacă folosești altul
     const contractAddress = "0xfef39ba17844791d4a023d47d96cb117c125b4d0";
+    const rpcUrl = "https://mainnet.base.org"; // Provider direct pentru citire instantă
     
-    const contractABI = [{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"string","name":"_initBaseURI","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"NotCompatibleWithSpotMints","type":"error"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"SequentialMintExceedsLimit","type":"error"},{"inputs":[],"name":"SequentialUpToTooSmall","type":"error"},{"inputs":[],"name":"SpotMintTokenIdTooSmall","type":"error"},{"inputs":[],"name":"TokenAlreadyExists","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"MAX_PER_TX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MINT_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isPaused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_newBaseURI","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"_state","type":"bool"}],"name":"setPaused","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"result","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+    const contractABI = [
+        {"inputs":[],"name":"MAX_PER_TX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[],"name":"MINT_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},
+        {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"result","type":"uint256"}],"stateMutability":"view","type":"function"}
+    ];
 
+    let currentQuantity = 1;
+    const maxPerWallet = 5;
+    const unitPrice = 0.01; // Pret per NFT in ETH
+
+    // Modificare cantitate (- / +)
+    function changeQuantity(amount) {
+        currentQuantity += amount;
+        if (currentQuantity < 1) currentQuantity = 1;
+        if (currentQuantity > maxPerWallet) currentQuantity = maxPerWallet;
+        
+        document.getElementById("mintQuantity").innerText = currentQuantity;
+        
+        // Actualizare pret total afisat
+        const totalPrice = (currentQuantity * unitPrice).toFixed(4);
+        document.getElementById("totalPriceDisplay").innerText = parseFloat(totalPrice);
+    }
+
+    // Incărcare statistici Live din Smart Contract
+    async function fetchContractData() {
+        try {
+            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+            const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+            const [totalSupply, maxSupply] = await Promise.all([
+                contract.totalSupply(),
+                contract.MAX_SUPPLY()
+            ]);
+
+            const minted = totalSupply.toNumber();
+            const total = maxSupply.toNumber();
+
+            document.getElementById("mintedAmount").innerText = minted.toLocaleString();
+            document.getElementById("maxSupply").innerText = total.toLocaleString();
+
+            // Calculare si actualizare bara de progres (%)
+            const percentage = Math.min((minted / total) * 100, 100);
+            document.getElementById("progressBar").style.width = percentage + "%";
+        } catch (error) {
+            console.error("Eroare la citirea datelor din contract:", error);
+        }
+    }
+
+    // Executare Minting
     async function mintNFT() {
         const statusText = document.getElementById("status");
         
@@ -551,7 +631,7 @@
                             chainId: '0x2105',
                             chainName: 'Base',
                             nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                            rpcUrls: ['https://mainnet.base.org'],
+                            rpcUrls: [rpcUrl],
                             blockExplorerUrls: ['https://basescan.org']
                         }],
                     });
@@ -566,15 +646,21 @@
 
             statusText.innerText = "Citire date contract...";
             const mintPrice = await nftContract.MINT_PRICE();
+            
+            // Calculare valoare totală transmisă
+            const totalValue = mintPrice.mul(currentQuantity);
 
             statusText.innerText = "Please confirm the transaction in your wallet...";
 
-            const tx = await nftContract.mint(1, { value: mintPrice });
+            const tx = await nftContract.mint(currentQuantity, { value: totalValue });
 
             statusText.innerText = "Processing transaction...";
             await tx.wait();
 
             statusText.innerText = "Mint successful! 🎉";
+            
+            // Reîncărcare contor după un mint reușit
+            fetchContractData();
         } catch (error) {
             console.error(error);
             if (error.code === 4001) {
@@ -586,6 +672,9 @@
             }
         }
     }
+
+    // Execută citirea datelor la deschiderea paginii
+    window.addEventListener('DOMContentLoaded', fetchContractData);
 </script>
 
     <main class="container">
