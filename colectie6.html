@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ape Boltadori Club | BredApeYuriClub Ecosystem</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Ethers.js v5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background: #080b11; color: #ffffff; min-height: 100vh; }
@@ -12,14 +14,42 @@
         .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; background: linear-gradient(135deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; font-size: 1.5rem; }
         .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
         .title { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; text-align: center; margin-bottom: 20px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 30px 0; }
-        .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; text-align: center; }
-        .stat-card span { display: block; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
-        .stat-card strong { font-size: 1.3rem; color: #f8fafc; font-family: 'Montserrat'; }
+        
+        /* Card Mint */
+        .mint-card { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; max-width: 650px; margin: 30px auto; }
+        .mint-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px; }
+        .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+        .progress-bar-fill { height: 100%; width: 55%; background: #2563eb; transition: width 0.4s ease; }
+        
+        .stage-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .stage-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+        .price-tag { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+        .usd-price { font-size: 0.85rem; color: #94a3b8; font-weight: 500; margin-right: 6px; }
+        .status-tag { display: inline-flex; align-items: center; font-size: 0.75rem; font-weight: 700; color: #10b981; }
+        .dot { height: 6px; width: 6px; background-color: #10b981; border-radius: 50%; display: inline-block; margin-right: 4px; }
+
+        /* Controale */
+        .mint-controls { display: flex; align-items: center; gap: 12px; }
+        .qty-selector { display: flex; align-items: center; background: #ffffff; color: #0f172a; border-radius: 10px; padding: 4px 8px; font-weight: 700; }
+        .qty-btn { background: none; border: none; font-size: 1.2rem; font-weight: 700; color: #64748b; cursor: pointer; padding: 4px 10px; }
+        .qty-btn:hover { color: #000; }
+        .qty-val { width: 24px; text-align: center; }
+
+        .btn-blue-mint { background: #0084ff; color: #ffffff; border: none; padding: 10px 28px; border-radius: 20px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .btn-blue-mint:hover { background: #0066cc; }
+
+        /* Grid Statistici */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 30px 0; }
+        .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; text-align: center; }
+        .stat-card span { display: block; color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+        .stat-card strong { font-size: 1.1rem; color: #f8fafc; font-family: 'Montserrat'; }
+
         .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; }
         .gallery img { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
         .gallery img:hover { transform: scale(1.05); }
+        
         .btn-opensea { display: block; width: 100%; max-width: 300px; margin: 30px auto; padding: 15px; text-align: center; background: linear-gradient(135deg, #6366f1, #a855f7); color: white; text-decoration: none; border-radius: 10px; font-weight: 700; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4); }
+        #status-msg { text-align: center; margin-top: 15px; font-size: 0.85rem; color: #a855f7; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -29,13 +59,53 @@
     </nav>
     <main class="container">
         <h1 class="title">Ape Boltadori Club</h1>
-        <div class="stats-grid">
-            <div class="stat-card"><span>Floor Price</span><strong>0.0083 ETH</strong></div>
-            <div class="stat-card"><span>Total Volume</span><strong>6.82 ETH</strong></div>
-            <div class="stat-card"><span>Owners</span><strong>1,009</strong></div>
-            <div class="stat-card"><span>Items</span><strong>4,157</strong></div>
+        
+        <!-- CARDUL VIZUAL DE MINT (DATE REALE DIN IMAGINE) -->
+        <div class="mint-card">
+            <div class="mint-header">
+                <span>Items minted</span>
+                <span id="mint-count">2,742 / 5,000</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+
+            <div class="stage-box">
+                <div class="stage-info">
+                    <h3>Public Stage</h3>
+                    <div class="price-tag">
+                        0.0005 ETH
+                    </div>
+                    <div>
+                        <span class="usd-price">$1.23</span>
+                        <span class="status-tag"><span class="dot"></span> MINTING NOW</span>
+                    </div>
+                </div>
+
+                <div class="mint-controls">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                        <span id="qty-display" class="qty-val">1</span>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+                    <button class="btn-blue-mint" onclick="mintNFT()">Mint</button>
+                </div>
+            </div>
+            <div id="status-msg"></div>
         </div>
+
+        <!-- STATISTICI REALE DE PE OPENSEA -->
+        <div class="stats-grid">
+            <div class="stat-card"><span>Floor Price</span><strong>0.0004 ETH</strong></div>
+            <div class="stat-card"><span>Top Offer</span><strong>0.0002 WETH</strong></div>
+            <div class="stat-card"><span>24h Volume</span><strong>0.00 ETH</strong></div>
+            <div class="stat-card"><span>Total Volume</span><strong>7.61 ETH</strong></div>
+            <div class="stat-card"><span>Listed</span><strong>422 (15.4%)</strong></div>
+            <div class="stat-card"><span>Owners</span><strong>1,229 (44.8%)</strong></div>
+        </div>
+
         <a href="https://opensea.io/collection/ape-boltadori-club" target="_blank" class="btn-opensea">View on OpenSea</a>
+
         <h2 style="font-family: 'Montserrat'; margin-top: 40px; margin-bottom: 20px;">Featured Gallery</h2>
         <div class="gallery">
             <img src="images/bolt1.png" alt="NFT Showcase 1" onerror="this.src='images/placeholder1.png'">
@@ -44,5 +114,76 @@
             <img src="images/bolt4.png" alt="NFT Showcase 4" onerror="this.src='images/placeholder4.png'">
         </div>
     </main>
+
+    <script>
+        // Setări de contracte (Formatate automat)
+        const RAW_NFT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; // Înlocuiește cu adresa contractului Ape Boltadori Club dacă este diferită
+        const RAW_SEADROP_ADDRESS = "0x00005EA00Ac477B1030CE78506496e8C2dE24bf5"; 
+
+        const UNIT_PRICE_ETH = "0.0005"; // Prețul exact din poze (0.0005 ETH)
+        let currentQty = 1;
+
+        function changeQty(delta) {
+            currentQty += delta;
+            if (currentQty < 1) currentQty = 1;
+            if (currentQty > 10) currentQty = 10;
+            document.getElementById("qty-display").innerText = currentQty;
+        }
+
+        async function mintNFT() {
+            const statusDiv = document.getElementById("status-msg");
+
+            if (typeof window.ethereum === "undefined") {
+                statusDiv.innerText = "Te rugăm să instalezi MetaMask!";
+                return;
+            }
+
+            try {
+                // Prevenim eroarea bad address checksum
+                const nftAddress = ethers.utils.getAddress(RAW_NFT_ADDRESS.toLowerCase());
+                const seaDropAddress = ethers.utils.getAddress(RAW_SEADROP_ADDRESS.toLowerCase());
+
+                statusDiv.innerText = "Se conectează portofelul...";
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                const signer = provider.getSigner();
+                const userAddress = await signer.getAddress();
+
+                // Calculare preț folosind BigNumber (fără pierderi de zecimale)
+                const unitPriceWei = ethers.utils.parseEther(UNIT_PRICE_ETH);
+                const totalPriceWei = unitPriceWei.mul(currentQty);
+
+                // Verificăm fondurile utilizatorului
+                const balance = await provider.getBalance(userAddress);
+                if (balance.lt(totalPriceWei)) {
+                    const requiredEth = ethers.utils.formatEther(totalPriceWei);
+                    statusDiv.innerText = `Fonduri insuficiente! Ai nevoie de cel puțin ${requiredEth} ETH + gaz pentru ${currentQty} NFT(uri).`;
+                    return;
+                }
+
+                const seaDropContract = new ethers.Contract(seaDropAddress, [
+                    "function mintPublic(address nftContract, address feeRecipient, address minterIfNotPayer, uint256 quantity) external payable"
+                ], signer);
+
+                statusDiv.innerText = "Confirmă tranzacția în MetaMask...";
+
+                const tx = await seaDropContract.mintPublic(
+                    nftAddress,
+                    "0x0000000000000000000000000000000000000000",
+                    userAddress,
+                    currentQty,
+                    { value: totalPriceWei }
+                );
+
+                statusDiv.innerText = "Tranzacție trimisă! Se procesează pe blockchain...";
+                await tx.wait();
+                statusDiv.innerText = "Mint reușit! NFT-urile sunt în portofelul tău.";
+
+            } catch (error) {
+                console.error(error);
+                statusDiv.innerText = "Eroare: " + (error.reason || error.message);
+            }
+        }
+    </script>
 </body>
 </html>
