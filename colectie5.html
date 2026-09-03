@@ -106,10 +106,12 @@
     </main>
 
     <script>
-        // CONFIGURAT CU DATELE REALE DIN IMAGINE
-        const NFT_CONTRACT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; // Contractul tău
-        const SEADROP_ADDRESS = "0x00005EA001867280339DE4D165d51d2772023508"; 
-        const UNIT_PRICE_ETH = "0.035"; // Prețul exact din poze (0.035 ETH)
+        // Adresa ta (trecută prin getAddress pentru a elimina eroarea de checksum)
+const RAW_NFT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; 
+const NFT_CONTRACT_ADDRESS = ethers.utils.getAddress(RAW_NFT_ADDRESS.toLowerCase());
+
+const SEADROP_ADDRESS = ethers.utils.getAddress("0x00005ea001867280339de4d165d51d2772023508"); 
+const UNIT_PRICE_ETH = "0.035";
         
         let currentQty = 1;
 
