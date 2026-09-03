@@ -22,7 +22,7 @@
         .mint-card { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; max-width: 650px; margin: 30px auto; }
         .mint-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px; }
         .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
-        .progress-bar-fill { height: 100%; width: 41.16%; background: #2563eb; } /* 1,235 din 3,000 adică ~41.16% */
+        .progress-bar-fill { height: 100%; width: 41%; background: #2563eb; } /* 1,230 din 3,000 adică ~41% */
         
         .stage-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
         .stage-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
@@ -70,7 +70,7 @@
                         0.0127 ETH
                     </div>
                     <div>
-                        <span class="usd-price">$31.79</span>
+                        <span class="usd-price">$30.64</span>
                         <span class="status-tag"><span class="dot"></span> MINTING NOW</span>
                     </div>
                 </div>
@@ -88,12 +88,12 @@
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card"><span>Floor Price</span><strong>0.061 ETH</strong></div>
-            <div class="stat-card"><span>Top Offer</span><strong>0.0002 WETH</strong></div>
-            <div class="stat-card"><span>24h Volume</span><strong>0.66 ETH</strong></div>
-            <div class="stat-card"><span>Total Volume</span><strong>8.48 ETH</strong></div>
-            <div class="stat-card"><span>Listed</span><strong>109 (8.8%)</strong></div>
-            <div class="stat-card"><span>Owners</span><strong>143 (11.6%)</strong></div>
+            <div class="stat-card"><span>Floor Price</span><strong>0.0025 ETH</strong></div>
+            <div class="stat-card"><span>Top Offer</span><strong>0.0001 WETH</strong></div>
+            <div class="stat-card"><span>24h Volume</span><strong>0.00 ETH</strong></div>
+            <div class="stat-card"><span>Total Volume</span><strong>7.82 ETH</strong></div>
+            <div class="stat-card"><span>Listed</span><strong>120 (9.8%)</strong></div>
+            <div class="stat-card"><span>Owners</span><strong>132 (10.7%)</strong></div>
         </div>
 
         <h2 style="font-family: 'Montserrat'; margin-top: 40px; margin-bottom: 20px;">Featured Gallery</h2>
@@ -109,7 +109,7 @@
         // CONFIGURAT CU DATELE REALE DIN IMAGINE
         const NFT_CONTRACT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; // Contractul tău
         const SEADROP_ADDRESS = "0x00005EA001867280339DE4D165d51d2772023508"; 
-        const UNIT_PRICE_ETH = "0.0127"; // Prețul exact din imagine (0.0127 ETH)
+        const UNIT_PRICE_ETH = "0.0127"; // Prețul exact din poze (0.035 ETH)
         
         let currentQty = 1;
 
@@ -142,8 +142,8 @@
                 const seaDropContract = new ethers.Contract(SEADROP_ADDRESS, SEADROP_ABI, signer);
                 statusDiv.innerText = "Confirmă tranzacția în portofel...";
                 
-                // Calcul dinamic: 0.0127 ETH * cantitate
-                const totalPrice = ethers.utils.parseEther((0.0127 * currentQty).toFixed(4));
+                // Calcul dinamic: 0.035 ETH * cantitate
+                const totalPrice = ethers.utils.parseEther((0.035 * currentQty).toFixed(4));
 
                 const tx = await seaDropContract.mintPublic(
                     NFT_CONTRACT_ADDRESS,
