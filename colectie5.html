@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apes Bunitori Evolution | BredApeYuriClub Ecosystem</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Ethers.js v5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,15 +15,17 @@
         .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
         .title { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; text-align: center; margin-bottom: 20px; }
         
+        /* Statistici Grid */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 30px 0; }
         .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; text-align: center; }
         .stat-card span { display: block; color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
         .stat-card strong { font-size: 1.1rem; color: #f8fafc; font-family: 'Montserrat'; }
         
+        /* Card Mint */
         .mint-card { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; max-width: 650px; margin: 30px auto; }
         .mint-header { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px; }
         .progress-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
-        .progress-bar-fill { height: 100%; width: 41%; background: #2563eb; } /* 1,230 din 3,000 adică ~41% */
+        .progress-bar-fill { height: 100%; width: 41%; background: #2563eb; transition: width 0.4s ease; }
         
         .stage-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
         .stage-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
@@ -31,6 +34,7 @@
         .status-tag { display: inline-flex; align-items: center; font-size: 0.75rem; font-weight: 700; color: #10b981; }
         .dot { height: 6px; width: 6px; background-color: #10b981; border-radius: 50%; display: inline-block; margin-right: 4px; }
 
+        /* Controale Mint */
         .mint-controls { display: flex; align-items: center; gap: 12px; }
         .qty-selector { display: flex; align-items: center; background: #ffffff; color: #0f172a; border-radius: 10px; padding: 4px 8px; font-weight: 700; }
         .qty-btn { background: none; border: none; font-size: 1.2rem; font-weight: 700; color: #64748b; cursor: pointer; padding: 4px 10px; }
@@ -43,7 +47,7 @@
         .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; }
         .gallery img { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
         .gallery img:hover { transform: scale(1.05); }
-        #status-msg { text-align: center; margin-top: 15px; font-size: 0.85rem; color: #a855f7; }
+        #status-msg { text-align: center; margin-top: 15px; font-size: 0.85rem; color: #a855f7; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -54,6 +58,7 @@
     <main class="container">
         <h1 class="title">Apes Bunitori Evolution</h1>
         
+        <!-- CARDUL VIZUAL DE MINT (DATE REALE DIN POZĂ) -->
         <div class="mint-card">
             <div class="mint-header">
                 <span>Items minted</span>
@@ -67,7 +72,7 @@
                 <div class="stage-info">
                     <h3>Public Stage</h3>
                     <div class="price-tag">
-                        0.035 ETH
+                        <span id="price-display">0.035</span> ETH
                     </div>
                     <div>
                         <span class="usd-price">$85.64</span>
@@ -87,6 +92,7 @@
             <div id="status-msg"></div>
         </div>
 
+        <!-- STATISTICI REALE -->
         <div class="stats-grid">
             <div class="stat-card"><span>Floor Price</span><strong>0.0025 ETH</strong></div>
             <div class="stat-card"><span>Top Offer</span><strong>0.0001 WETH</strong></div>
@@ -106,13 +112,11 @@
     </main>
 
     <script>
-        // Adresa ta (trecută prin getAddress pentru a elimina eroarea de checksum)
-const RAW_NFT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; 
-const NFT_CONTRACT_ADDRESS = ethers.utils.getAddress(RAW_NFT_ADDRESS.toLowerCase());
+        // Setări de rețea & contracte (Formatare sigură)
+        const RAW_NFT_ADDRESS = "0xc53e2b1E048Cf5F693D370341990c6Ab64a83D6D"; 
+        const RAW_SEADROP_ADDRESS = "0x00005EA00Ac477B1030CE78506496e8C2dE24bf5"; // Contractul oficial OpenSea SeaDrop v1.0
 
-const SEADROP_ADDRESS = ethers.utils.getAddress("0x00005ea001867280339de4d165d51d2772023508"); 
-const UNIT_PRICE_ETH = "0.035";
-        
+        const UNIT_PRICE_ETH = "0.035"; // Preț per NFT (0.035 ETH)
         let currentQty = 1;
 
         function changeQty(delta) {
@@ -121,10 +125,6 @@ const UNIT_PRICE_ETH = "0.035";
             if (currentQty > 10) currentQty = 10;
             document.getElementById("qty-display").innerText = currentQty;
         }
-
-        const SEADROP_ABI = [
-            "function mintPublic(address nftContract, address feeRecipient, address minterIfNotPayer, uint256 quantity) external payable"
-        ];
 
         async function mintNFT() {
             const statusDiv = document.getElementById("status-msg");
@@ -135,29 +135,45 @@ const UNIT_PRICE_ETH = "0.035";
             }
 
             try {
+                // Formatează adresele cu Checksum automat
+                const nftAddress = ethers.utils.getAddress(RAW_NFT_ADDRESS.toLowerCase());
+                const seaDropAddress = ethers.utils.getAddress(RAW_SEADROP_ADDRESS.toLowerCase());
+
                 statusDiv.innerText = "Se conectează portofelul...";
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 await provider.send("eth_requestAccounts", []);
                 const signer = provider.getSigner();
                 const userAddress = await signer.getAddress();
 
-                const seaDropContract = new ethers.Contract(SEADROP_ADDRESS, SEADROP_ABI, signer);
-                statusDiv.innerText = "Confirmă tranzacția în portofel...";
-                
-                // Calcul dinamic: 0.035 ETH * cantitate
-                const totalPrice = ethers.utils.parseEther((0.035 * currentQty).toFixed(4));
+                // Calculare preț folosind BigNumber (fără erori de zecimale)
+                const unitPriceWei = ethers.utils.parseEther(UNIT_PRICE_ETH);
+                const totalPriceWei = unitPriceWei.mul(currentQty);
+
+                // Verificare balanță înainte de trimitere
+                const balance = await provider.getBalance(userAddress);
+                if (balance.lt(totalPriceWei)) {
+                    const requiredEth = ethers.utils.formatEther(totalPriceWei);
+                    statusDiv.innerText = `Fonduri insuficiente! Ai nevoie de cel puțin ${requiredEth} ETH + gaz pentru ${currentQty} NFT(uri).`;
+                    return;
+                }
+
+                const seaDropContract = new ethers.Contract(seaDropAddress, [
+                    "function mintPublic(address nftContract, address feeRecipient, address minterIfNotPayer, uint256 quantity) external payable"
+                ], signer);
+
+                statusDiv.innerText = "Confirmă tranzacția în MetaMask...";
 
                 const tx = await seaDropContract.mintPublic(
-                    NFT_CONTRACT_ADDRESS,
-                    "0x0000000000000000000000000000000000000000",
-                    userAddress,
-                    currentQty,
-                    { value: totalPrice }
+                    nftAddress,
+                    "0x0000000000000000000000000000000000000000", // Address ZERO pentru feeRecipient
+                    userAddress,                                   // Minter
+                    currentQty,                                    // Cantitate
+                    { value: totalPriceWei }
                 );
 
-                statusDiv.innerText = "Tranzacție trimisă! Se procesează...";
+                statusDiv.innerText = "Tranzacție trimisă! Se procesează pe blockchain...";
                 await tx.wait();
-                statusDiv.innerText = "Mint reușit! NFT-urile sunt în portofelul tău.";
+                statusDiv.innerText = "Mint reușit! NFT-urile au fost trimise în portofelul tău.";
 
             } catch (error) {
                 console.error(error);
