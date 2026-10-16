@@ -1,1165 +1,926 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BredApeYuriClub | NFT Collections Hub</title>
+    <title>BredApeYuriClub | Official NFT Ecosystem Hub</title>
     <!-- Modern Web3 Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#07090e',
+                        cardBg: 'rgba(255, 255, 255, 0.03)',
+                        cardBorder: 'rgba(255, 255, 255, 0.08)',
+                        accentIndigo: '#6366f1',
+                        accentPurple: '#a855f7',
+                        accentPink: '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --bg-main: #07090e;
+            --text-main: #ffffff;
+            --card-bg: rgba(18, 24, 38, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(12, 16, 26, 0.9);
+            --footer-bg: #05070a;
+            --muted-text: #94a3b8;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #f8fafc;
+            --text-main: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(15, 23, 42, 0.1);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #f1f5f9;
+            --muted-text: #64748b;
+        }
+
+        [data-theme="cyber"] {
+            --bg-main: #030712;
+            --text-main: #f0fdf4;
+            --card-bg: rgba(6, 78, 59, 0.25);
+            --card-border: rgba(52, 211, 153, 0.3);
+            --nav-bg: rgba(2, 44, 34, 0.9);
+            --footer-bg: #022c22;
+            --muted-text: #6ee7b7;
+        }
+
+        [data-theme="midnight"] {
+            --bg-main: #020617;
+            --text-main: #e2e8f0;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(56, 189, 248, 0.25);
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --footer-bg: #090d16;
+            --muted-text: #93c5fd;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #080b11;
-            color: #ffffff;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-bottom: 75px; /* Space for fixed bottom bar */
         }
 
-        .video-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
-        .background-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.12;
-            filter: blur(8px);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 6%;
-            background: rgba(12, 16, 26, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
+        .hero-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-gradient {
             background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-decoration: none;
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
+        .card-hover:hover {
+            transform: translateY(-8px);
+            border-color: rgba(129, 140, 248, 0.35);
+            box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.3);
         }
 
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        .nav-links a:hover {
-            color: #ffffff;
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
         }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #10141f;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            min-width: 280px;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-            padding: 10px 0;
-            z-index: 100;
-        }
-
-        .dropdown-content a {
-            padding: 10px 18px;
-            display: block;
-            color: #cbd5e1;
-            font-size: 0.85rem;
-        }
-
-        .dropdown-content a:hover {
-            background: rgba(99, 102, 241, 0.15);
-            color: #818cf8;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .social-icons img {
-            width: 22px;
-            height: 22px;
-            vertical-align: middle;
-            opacity: 0.8;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .social-icons img:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-
-        .btn-mint-primary {
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            color: #ffffff !important;
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-weight: 700;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s !important;
-        }
-
-        .btn-mint-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
-        }
-
-        .hero {
-            padding: 60px 20px 40px;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: #94a3b8;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 35px;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-        }
-
-        .stat-item h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            color: #818cf8;
-        }
-
-        .stat-item p {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 0;
-        }
-
-        .filter-section {
-            max-width: 1600px;
-            margin: 20px auto 30px;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .search-bar {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 10px 20px;
-            color: #fff;
-            width: 300px;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .search-bar::placeholder {
-            color: #64748b;
-        }
-
-        .filter-tags {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .tag.active, .tag:hover {
-            background: #6366f1;
-            color: #ffffff;
-            border-color: #6366f1;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-            flex: 1;
-        }
-
-        .section-header {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .collections-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); 
-            gap: 20px;
-        }
-
-        @media (max-width: 1400px) { .collections-grid { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 1024px) { .collections-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .collections-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .collections-grid { grid-template-columns: 1fr; } }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(129, 140, 248, 0.4);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .card-img-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 100%;
-            overflow: hidden;
-        }
-
-        .card-img-wrapper img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-img-wrapper img {
-            transform: scale(1.08);
-        }
-
-        .card-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(12, 16, 26, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #38bdf8;
-            z-index: 2;
-        }
-
-        .card-badge.vip {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
-        }
-
-        .card-body {
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #f8fafc;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-stats {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
-            padding: 8px 6px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .stat-box {
-            text-align: center;
-        }
-
-        .stat-box span {
-            display: block;
-            font-size: 0.65rem;
-            color: #64748b;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .stat-box strong {
-            font-size: 0.75rem;
-            color: #cbd5e1;
-            font-weight: 700;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .card-btn {
-            flex: 1;
-            padding: 8px 0;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-        }
-
-        .btn-primary {
-            background: #6366f1;
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            background: #4f46e5;
-        }
-
-        footer {
-            background: #05070a;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 40px 20px 20px;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        .footer-copyright {
-            text-align: center;
-            padding-top: 20px;
-            font-size: 0.8rem;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
         }
     </style>
 </head>
-<body>
+<body class="selection:bg-indigo-500 selection:text-white">
 
-    <div class="video-container">
-        <video autoplay muted loop class="background-video">
-            <source src="images/ab.mp4" type="video/mp4">
-        </video>
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[140px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px]"></div>
     </div>
 
-    <nav class="navbar">
-        <a href="index.html" class="logo">BredApeYuriClub</a>
-        
-        <div class="nav-links">
-            <a href="index.html">Home</a>
+    <nav class="glass-panel sticky top-0 z-50 px-6 lg:px-12 py-4 flex items-center justify-between border-b border-white/10">
+        <a href="index.html" class="font-['Montserrat'] font-black text-xl lg:text-2xl brand-gradient tracking-tight">
+            BredApeYuriClub
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="index.html" class="font-medium text-sm hover:text-indigo-400 transition-colors" style="color: var(--text-main);">Home</a>
             
-            <div class="dropdown">
-                <a href="#">Collections (15) ▾</a>
-                <div class="dropdown-content">
-                    <a href="colectie1.html">1. Apes Bunitori Club [VIP]</a>
-                    <a href="colectie2.html">2. BlazeEntity [VIP]</a>
-                    <a href="colectie3.html">3. Bonatori</a>
-                    <a href="colectie4.html">4. BredApeYuriClub</a>
-                    <a href="colectie5.html">5. Apes Bunitori Evolution</a>
-                    <a href="colectie6.html">6. Ape Boltadori Club</a>
-                    <a href="colectie7.html">7. Apes The Eternal Brotherhood</a>
-                    <a href="colectie8.html">8. Apes Bunitori Premium</a>
-                    <a href="colectie9.html">9. Apes Bunitori Gold Club</a>
-                    <a href="colectie10.html">10. Bred Ape Yuri</a>
-                    <a href="colectie11.html">11. Apes Bunitori Limited Edition</a>
-                    <a href="colectie12.html">12. Apes Bunitori Christmas Club</a>
-                    <a href="colectie13.html">13. Apes Bunitori Dimension Base</a>
-                    <a href="colectie14.html">14. Apes Bunitori Dimension Club</a>
-                    <a href="colectie15.html">15. Apes Robinhood Hoodie</a>
+            <!-- Collections Dropdown -->
+            <div class="relative group">
+                <button class="font-medium text-sm hover:text-indigo-400 flex items-center gap-1.5 py-2" style="color: var(--muted-text);">
+                    Collections (18) 
+                    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="absolute top-full left-0 w-80 max-h-96 overflow-y-auto glass-panel rounded-2xl p-2 shadow-2xl hidden group-hover:block border border-white/10 mt-1">
+                    <a href="#card-1" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">1. Apes Bunitori Club [VIP]</a>
+                    <a href="#card-2" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">2. BlazeEntity [VIP]</a>
+                    <a href="#card-3" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">3. Bonatori</a>
+                    <a href="#card-4" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">4. BredApeYuriClub</a>
+                    <a href="#card-5" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">5. Apes Bunitori Evolution</a>
+                    <a href="#card-6" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">6. Ape Boltadori Club</a>
+                    <a href="#card-7" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">7. Apes The Eternal Brotherhood</a>
+                    <a href="#card-8" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">8. Apes Bunitori Premium</a>
+                    <a href="#card-9" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">9. Apes Bunitori Gold Club</a>
+                    <a href="#card-10" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">10. Bred Ape Yuri</a>
+                    <a href="#card-11" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">11. Apes Bunitori Limited Edition</a>
+                    <a href="#card-12" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">12. Apes Bunitori Christmas Club</a>
+                    <a href="#card-13" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">13. Apes Bunitori Dimension Base</a>
+                    <a href="#card-14" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">14. Apes Bunitori Dimension Club</a>
+                    <a href="#card-15" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">15. Apes Robinhood Hoodie</a>
+                    <a href="#card-16" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">16. Brad Bunitori Club</a>
+                    <a href="#card-17" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">17. Apes Bunitori Punk</a>
+                    <a href="#card-18" class="block px-4 py-2.5 rounded-xl text-xs hover:bg-indigo-600/25 transition-all font-medium" style="color: var(--text-main);">18. Aetheria: The Fox Artisan</a>
                 </div>
             </div>
 
-            <a href="https://x.com/BradApeYuriClub" target="_blank" class="social-icons">
-                <img src="images/twitter-logo.png" alt="Twitter">
-            </a>
-            <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="social-icons">
-                <img src="images/opensea-logo.png" alt="OpenSea Profile">
-            </a>
-
-            <a href="https://opensea.io/BredApeYuriClub/created" class="btn-mint-primary">Mint Now</a>
+            <a href="https://x.com/BradApeYuriClub" target="_blank" class="transition-colors text-sm font-medium" style="color: var(--muted-text);">Twitter / X</a>
+            <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="transition-colors text-sm font-medium" style="color: var(--muted-text);">OpenSea Profile</a>
         </div>
+
+        <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-sm px-6 py-2.5 rounded-full shadow-lg shadow-indigo-500/25 transition-all transform hover:-translate-y-0.5">
+            Mint Now
+        </a>
     </nav>
 
-    <section class="hero">
-        <h1>Official NFT Marketplace</h1>
-        <p><strong>Welcome to BredApeYuriClub</strong><br>Your Ultimate Lifetime Pass to our entire ecosystem. 🚀 Holder Utility: Hold 1 Apes Bunitori Club NFT FREE MINTS on ALL future collections launched and minted directly on OpenSea. No deadlines, no whitelists covered for life. (Valid exclusively for OpenSea launches)
-        
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h2>15</h2>
-                <p>Collections</p>
+    <header class="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-6">
+            🚀 Official Web3 Ecosystem Hub
+        </span>
+        <h1 class="hero-title font-black text-4xl lg:text-6xl tracking-tight mb-6">
+            Official NFT Marketplace
+        </h1>
+        <p class="text-base lg:text-lg leading-relaxed max-w-3xl mx-auto mb-10" style="color: var(--muted-text);">
+            <strong style="color: var(--text-main);">Welcome to Apes Bunitori Club</strong><br>
+            Your Ultimate Lifetime Pass to our entire ecosystem. <strong class="text-indigo-400">Holder Utility:</strong> Hold 1 Apes Bunitori Club NFT for <strong class="text-emerald-400">FREE MINTS on ALL future collections</strong>. No deadlines, whitelists covered for life.
+        </p>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto glass-panel p-6 rounded-2xl border border-white/10">
+            <div>
+                <h3 class="font-['Montserrat'] font-black text-2xl text-indigo-400">18</h3>
+                <p class="text-xs uppercase tracking-wider font-semibold mt-1" style="color: var(--muted-text);">Collections</p>
             </div>
-            <div class="stat-item">
-                <h2>157+ ETH</h2>
-                <p>Total Volume</p>
+            <div>
+                <h3 class="font-['Montserrat'] font-black text-2xl text-purple-400">157+ ETH</h3>
+                <p class="text-xs uppercase tracking-wider font-semibold mt-1" style="color: var(--muted-text);">Total Volume</p>
             </div>
-            <div class="stat-item">
-                <h2>54,000+</h2>
-                <p>Total Items</p>
+            <div>
+                <h3 class="font-['Montserrat'] font-black text-2xl text-pink-400">54,000+</h3>
+                <p class="text-xs uppercase tracking-wider font-semibold mt-1" style="color: var(--muted-text);">Total Items</p>
             </div>
+        </div>
+    </header>
+
+    <section class="max-w-[1600px] mx-auto px-6 mb-12 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- BANNER 1: Live Smart Contract Mint (Brad Bunitori Club) -->
+            <div class="relative rounded-3xl p-6 lg:p-8 overflow-hidden border-2 border-pink-500/30 bg-gradient-to-br from-pink-500/10 via-purple-600/10 to-indigo-900/20 backdrop-blur-xl flex flex-col justify-between shadow-xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div>
+                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                        <img src="images/Brad.jpg" alt="Brad Bunitori Club" onerror="this.src='https://placehold.co/100x100/1e293b/ffffff?text=Brad'" class="w-20 h-20 rounded-2xl object-cover border border-white/20 shadow-lg">
+                        <div>
+                            <span class="inline-block bg-pink-500 text-white px-3 py-1 rounded-lg text-xs font-bold mb-2 shadow-sm">
+                                MINT LIVE • Base Chain
+                            </span>
+                            <h2 class="text-2xl font-bold" style="color: var(--text-main);">Brad Bunitori Club</h2>
+                            <p class="text-sm mt-1" style="color: var(--muted-text);">Status: <strong id="status" class="text-emerald-400 font-semibold text-base">Live now</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2 font-medium" style="color: var(--muted-text);">
+                            <span>Items Minted</span>
+                            <span class="font-bold" style="color: var(--text-main);"><span id="mintedAmount">482</span> / <span id="maxSupply">1000</span></span>
+                        </div>
+                        <div class="w-full bg-white/10 h-3 rounded-full overflow-hidden p-0.5">
+                            <div id="progressBar" class="w-[48%] h-full bg-gradient-to-r from-pink-500 to-indigo-500 rounded-full transition-all duration-500"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mint Controls -->
+                <div class="bg-slate-950/60 border border-white/10 rounded-2xl p-4 flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider font-semibold" style="color: var(--muted-text);">Public Stage Price</div>
+                        <div class="text-lg font-bold mt-0.5" style="color: var(--text-main);"><span id="totalPriceDisplay">0.01</span> ETH <span class="text-emerald-400 text-xs ml-2 font-normal">● READY TO MINT</span></div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center bg-slate-900 rounded-xl border border-slate-700 overflow-hidden">
+                            <button onclick="changeQuantity(-1)" class="px-3.5 py-2 text-white hover:bg-slate-800 transition-colors text-lg font-bold">-</button>
+                            <span id="mintQuantity" class="px-3 text-white font-bold">1</span>
+                            <button onclick="changeQuantity(1)" class="px-3.5 py-2 text-white hover:bg-slate-800 transition-colors text-lg font-bold">+</button>
+                        </div>
+
+                        <button id="mintBtn" onclick="mintNFT()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-indigo-600/30 transition-all text-sm">
+                            Mint Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANNER 2: OpenSea Live Collection (Apes Bunitori Punk) -->
+            <div class="relative rounded-3xl p-6 lg:p-8 overflow-hidden border-2 border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-cyan-600/10 to-indigo-900/20 backdrop-blur-xl flex flex-col justify-between shadow-xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div>
+                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                        <img src="images/Punk.jpg" alt="Apes Bunitori Punk" onerror="this.src='https://placehold.co/100x100/1e293b/ffffff?text=Punk'" class="w-20 h-20 rounded-2xl object-cover border border-white/20 shadow-lg">
+                        <div>
+                            <span class="inline-block bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-bold mb-2 shadow-sm">
+                                OPENSEA FEATURED
+                            </span>
+                            <h2 class="text-2xl font-bold" style="color: var(--text-main);">Apes Bunitori Punk</h2>
+                            <p class="text-sm mt-1" style="color: var(--muted-text);">Status: <strong class="text-emerald-400 font-semibold text-base">LIVE</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2 font-medium" style="color: var(--muted-text);">
+                            <span>Collection Supply</span>
+                            <span class="font-bold" style="color: var(--text-main);"><span>1,202</span> / <span>5,000</span></span>
+                        </div>
+                        <div class="w-full bg-white/10 h-3 rounded-full overflow-hidden p-0.5">
+                            <div class="w-[24%] h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenSea Action Box -->
+                <div class="bg-slate-950/60 border border-white/10 rounded-2xl p-4 flex items-center justify-between flex-wrap gap-4">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider font-semibold" style="color: var(--muted-text);">Marketplace Status</div>
+                        <div class="text-lg font-bold mt-0.5" style="color: var(--text-main);">5,000 unique items <span class="text-emerald-400 text-xs ml-2 font-normal">● LIVE NOW</span></div>
+                    </div>
+
+                    <a href="https://opensea.io/collection/apes-bunitori-punk/overview" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-blue-600/30 transition-all text-sm flex items-center gap-2">
+                        <span>View on OpenSea</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- BANNER 1: Minting Direct (Base Chain) -->
-<div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
-    <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 2px solid #ec4899; border-radius: 20px; padding: 25px; color: #ffffff;">
-        
-        <!-- Header Banner (Imagine + Detalii) -->
-        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-            <img src="images/Brad.jpg" alt="Brad Bunitori Club" style="width: 100px; height: 100px; border-radius: 12px; object-fit: cover;">
-            
-            <div style="flex: 1;">
-                <span style="background: #ec4899; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">NEW 1,000 items (NFTs) Limit 5 per wallet</span>
-                <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Brad Bunitori Club</h2>
-                <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Status: <strong id="status" style="color: #22c55e; font-size: 1.1rem;">Live now</strong></p>
-            </div>
-        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+    <script>
+        const contractAddress = "0xfef39ba17844791d4a023d47d96cb117c125b4d0";
+        const rpcUrl = "https://mainnet.base.org";
+        const contractABI = [
+            {"inputs":[],"name":"MAX_PER_TX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"MINT_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},
+            {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"result","type":"uint256"}],"stateMutability":"view","type":"function"}
+        ];
 
-        <!-- Sectiune Live Mint Counter & Progress Bar -->
-        <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;">
-                <span>Items minted</span>
-                <span style="font-weight: bold; color: #fff;"><span id="mintedAmount">0</span> / <span id="maxSupply">1000</span></span>
-            </div>
-            <div style="width: 100%; background: rgba(255, 255, 255, 0.1); height: 10px; border-radius: 5px; overflow: hidden;">
-                <div id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ec4899, #3b82f6); transition: width 0.4s ease;"></div>
-            </div>
-        </div>
+        let currentQuantity = 1;
+        const maxPerWallet = 5;
+        const unitPrice = 0.01;
 
-        <!-- Card Control Mint -->
-        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-            <div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: #fff;">Public Stage</div>
-                <div style="font-size: 0.9rem; color: #cbd5e1;"><span id="totalPriceDisplay">0.01</span> ETH <span style="color: #22c55e; font-size: 0.8rem; margin-left: 8px;">● MINTING NOW</span></div>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div style="display: flex; align-items: center; background: #1e293b; border-radius: 8px; border: 1px solid #334155; overflow: hidden;">
-                    <button onclick="changeQuantity(-1)" style="background: transparent; color: #fff; border: none; padding: 8px 16px; font-size: 1.2rem; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='transparent'">-</button>
-                    <span id="mintQuantity" style="color: #fff; font-weight: bold; padding: 0 12px;">1</span>
-                    <button onclick="changeQuantity(1)" style="background: transparent; color: #fff; border: none; padding: 8px 16px; font-size: 1.2rem; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='transparent'">+</button>
-                </div>
-
-                <button id="mintBtn" onclick="mintNFT()" class="card-btn btn-primary" style="padding: 12px 28px; background: #3b82f6; border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 25px; font-size: 1rem; transition: 0.2s;" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
-                    Mint
-                </button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- BANNER 2: OpenSea Live Collection (Apes Bunitori Punk) -->
-<div style="max-width: 1600px; margin: 0 auto 30px; padding: 0 20px;">
-    <div style="background: linear-gradient(135deg, rgba(32, 129, 226, 0.15), rgba(59, 130, 246, 0.15)); border: 2px solid #2081e2; border-radius: 20px; padding: 25px; color: #ffffff;">
-        
-        <!-- Header Banner (Imagine + Detalii) -->
-        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-            <img src="images/Punk.jpg" alt="Apes Bunitori Punk" style="width: 100px; height: 100px; border-radius: 12px; object-fit: cover;">
-            
-            <div style="flex: 1;">
-                <span style="background: #2081e2; color: #fff; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold;">OPENSEA COLLECTION</span>
-                <h2 style="font-size: 1.5rem; margin: 8px 0; color: #ffffff;">Apes Bunitori Punk</h2>
-                <!-- Schimbat in LIVE + Culoare verde -->
-                <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Status: <strong style="color: #22c55e; font-size: 1.1rem;">LIVE</strong></p>
-            </div>
-        </div>
-
-        <!-- Sectiune Minted Counter / Progress Bar -->
-        <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;">
-                <span>Total Collection Supply</span>
-                <!-- Aici modifici manual numarul de mint-uri de exemplu 1,250 -->
-                <span style="font-weight: bold; color: #fff;"><span>1,202</span> / <span>5,000</span></span>
-            </div>
-            <div style="width: 100%; background: rgba(255, 255, 255, 0.1); height: 10px; border-radius: 5px; overflow: hidden;">
-                <!-- Schimba width: 25% in functie de cat s-a mintat (ex: 1250 din 5000 inseamna 25%) -->
-                <div style="width: 25%; height: 100%; background: linear-gradient(90deg, #2081e2, #00f2fe); transition: width 0.4s ease;"></div>
-            </div>
-        </div>
-
-        <!-- Card Control OpenSea -->
-        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-            <div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: #fff;">OpenSea Collection Page</div>
-                <!-- Schimbat in LIVE NOW + Culoare verde -->
-                <div style="font-size: 0.9rem; color: #cbd5e1;">5,000 unique items <span style="color: #22c55e; font-size: 0.8rem; margin-left: 8px;">● LIVE NOW</span></div>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <!-- Buton direct catre pagina de OpenSea -->
-                <a href="https://opensea.io/collection/apes-bunitori-punk/overview" target="_blank" style="text-decoration: none;">
-                    <button style="padding: 12px 28px; background: #2081e2; border: none; cursor: pointer; color: white; font-weight: bold; border-radius: 25px; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.background='#1868b7'" onmouseout="this.style.background='#2081e2'">
-                        Mint / View on OpenSea
-                    </button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
-</div>
-    </div>
-</div>
-
-<!-- Biblioteca Ethers.js v5 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-
-<!-- Script Web3 & Interactivitate -->
-<script>
-    const contractAddress = "0xfef39ba17844791d4a023d47d96cb117c125b4d0";
-    const rpcUrl = "https://mainnet.base.org"; // Provider direct pentru citire instantă
-    
-    const contractABI = [
-        {"inputs":[],"name":"MAX_PER_TX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[],"name":"MINT_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},
-        {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"result","type":"uint256"}],"stateMutability":"view","type":"function"}
-    ];
-
-    let currentQuantity = 1;
-    const maxPerWallet = 5;
-    const unitPrice = 0.01; // Pret per NFT in ETH
-
-    // Modificare cantitate (- / +)
-    function changeQuantity(amount) {
-        currentQuantity += amount;
-        if (currentQuantity < 1) currentQuantity = 1;
-        if (currentQuantity > maxPerWallet) currentQuantity = maxPerWallet;
-        
-        document.getElementById("mintQuantity").innerText = currentQuantity;
-        
-        // Actualizare pret total afisat
-        const totalPrice = (currentQuantity * unitPrice).toFixed(4);
-        document.getElementById("totalPriceDisplay").innerText = parseFloat(totalPrice);
-    }
-
-    // Incărcare statistici Live din Smart Contract
-    async function fetchContractData() {
-        try {
-            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-            const contract = new ethers.Contract(contractAddress, contractABI, provider);
-
-            const [totalSupply, maxSupply] = await Promise.all([
-                contract.totalSupply(),
-                contract.MAX_SUPPLY()
-            ]);
-
-            const minted = totalSupply.toNumber();
-            const total = maxSupply.toNumber();
-
-            document.getElementById("mintedAmount").innerText = minted.toLocaleString();
-            document.getElementById("maxSupply").innerText = total.toLocaleString();
-
-            // Calculare si actualizare bara de progres (%)
-            const percentage = Math.min((minted / total) * 100, 100);
-            document.getElementById("progressBar").style.width = percentage + "%";
-        } catch (error) {
-            console.error("Eroare la citirea datelor din contract:", error);
-        }
-    }
-
-    // Executare Minting
-    async function mintNFT() {
-        const statusText = document.getElementById("status");
-        
-        if (typeof window.ethereum === 'undefined') {
-            alert("Instalează un portofel Web3 (MetaMask, Coinbase Wallet etc.)!");
-            return;
+        function changeQuantity(amount) {
+            currentQuantity += amount;
+            if (currentQuantity < 1) currentQuantity = 1;
+            if (currentQuantity > maxPerWallet) currentQuantity = maxPerWallet;
+            document.getElementById("mintQuantity").innerText = currentQuantity;
+            document.getElementById("totalPriceDisplay").innerText = (currentQuantity * unitPrice).toFixed(2);
         }
 
-        try {
-            statusText.innerText = "Connecting wallet...";
-
+        async function fetchContractData() {
             try {
-                await window.ethereum.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x2105' }], // Base Mainnet
-                });
-            } catch (switchError) {
-                if (switchError.code === 4902) {
-                    await window.ethereum.request({
-                        method: 'wallet_addEthereumChain',
-                        params: [{
-                            chainId: '0x2105',
-                            chainName: 'Base',
-                            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                            rpcUrls: [rpcUrl],
-                            blockExplorerUrls: ['https://basescan.org']
-                        }],
-                    });
-                }
-            }
+                if (typeof ethers === 'undefined') return;
+                const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+                const contract = new ethers.Contract(contractAddress, contractABI, provider);
+                const [totalSupply, maxSupply] = await Promise.all([
+                    contract.totalSupply(),
+                    contract.MAX_SUPPLY()
+                ]);
+                const minted = totalSupply.toNumber();
+                const total = maxSupply.toNumber();
+                const percentage = Math.min((minted / total) * 100, 100);
 
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            await provider.send("eth_requestAccounts", []);
-            const signer = provider.getSigner();
-
-            const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-            statusText.innerText = "Citire date contract...";
-            const mintPrice = await nftContract.MINT_PRICE();
-            
-            // Calculare valoare totală transmisă
-            const totalValue = mintPrice.mul(currentQuantity);
-
-            statusText.innerText = "Please confirm the transaction in your wallet...";
-
-            const tx = await nftContract.mint(currentQuantity, { value: totalValue });
-
-            statusText.innerText = "Processing transaction...";
-            await tx.wait();
-
-            statusText.innerText = "Mint successful! 🎉";
-            
-            // Reîncărcare contor după un mint reușit
-            fetchContractData();
-        } catch (error) {
-            console.error(error);
-            if (error.code === 4001) {
-                statusText.innerText = "Transaction canceled.";
-            } else if (error.message && error.message.includes("OutOfFunds")) {
-                statusText.innerText = "Insufficient funds (Base ETH)!";
-            } else {
-                statusText.innerText = "Transaction failed!";
+                document.getElementById("mintedAmount").innerText = minted.toLocaleString();
+                document.getElementById("maxSupply").innerText = total.toLocaleString();
+                document.getElementById("progressBar").style.width = percentage + "%";
+            } catch (err) {
+                console.warn("Using cached mint statistics:", err);
             }
         }
-    }
 
-    // Execută citirea datelor la deschiderea paginii
-    window.addEventListener('DOMContentLoaded', fetchContractData);
-</script>
+        async function mintNFT() {
+            const statusText = document.getElementById("status");
+            if (typeof window.ethereum === 'undefined') {
+                alert("Please install a Web3 wallet like MetaMask or Coinbase Wallet!");
+                return;
+            }
+            try {
+                statusText.innerText = "Connecting wallet...";
+                try {
+                    await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] });
+                } catch (switchError) {
+                    if (switchError.code === 4902) {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x2105',
+                                chainName: 'Base',
+                                nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+                                rpcUrls: [rpcUrl],
+                                blockExplorerUrls: ['https://basescan.org']
+                            }]
+                        });
+                    }
+                }
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                const signer = provider.getSigner();
+                const nftContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    <main class="container">
-        <div class="section-header">
-            <span>🔥</span> Featured Collections
+                statusText.innerText = "Reading contract...";
+                const mintPrice = await nftContract.MINT_PRICE();
+                const totalValue = mintPrice.mul(currentQuantity);
+
+                statusText.innerText = "Approve in wallet...";
+                const tx = await nftContract.mint(currentQuantity, { value: totalValue });
+                statusText.innerText = "Processing TX...";
+                await tx.wait();
+                statusText.innerText = "Mint Successful! 🎉";
+                fetchContractData();
+            } catch (error) {
+                console.error(error);
+                statusText.innerText = "Transaction failed or canceled.";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchContractData);
+    </script>
+
+    <div class="max-w-[1600px] mx-auto px-6 mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="relative w-full md:w-80">
+            <input type="text" id="searchInput" placeholder="Search collections..." class="w-full bg-white/5 border border-white/10 rounded-full px-5 py-3 text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" style="color: var(--text-main);">
+        </div>
+        <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0" id="filterTags">
+            <button class="tag active px-5 py-2.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-md" data-filter="all">All Collections (18)</button>
+            <button class="tag px-5 py-2.5 rounded-full text-xs font-semibold bg-white/5 text-slate-400 hover:bg-white/10 transition-all border border-white/10" data-filter="vip">VIP Passes</button>
+            <button class="tag px-5 py-2.5 rounded-full text-xs font-semibold bg-white/5 text-slate-400 hover:bg-white/10 transition-all border border-white/10" data-filter="gold">Gold & Rare</button>
+            <button class="tag px-5 py-2.5 rounded-full text-xs font-semibold bg-white/5 text-slate-400 hover:bg-white/10 transition-all border border-white/10" data-filter="dimension">Dimension Series</button>
+        </div>
+    </div>
+
+    <main class="max-w-[1600px] mx-auto px-6 pb-24 flex-1 w-full">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="text-xl">🔥</span>
+            <h2 class="font-['Montserrat'] font-bold text-2xl" style="color: var(--text-main);">Featured Collections</h2>
         </div>
 
-        <div class="collections-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="collectionsGrid">
 
             <!-- 1. Apes Bunitori Club -->
-<div class="card" data-slug="apes-bunitori-club">
-    <div class="card-img-wrapper">
-        <span class="card-badge vip">VIP</span>
-        <img src="images/abc.png" alt="Apes Bunitori Club">
-    </div>
-    <div class="card-body">
-        <h3 class="card-title">Apes Bunitori Club</h3>
-        <div class="card-stats">
-            <div class="stat-box">
-                <span>Floor</span>
-                <strong class="stat-floor">0.003</strong>
-            </div>
-            <div class="stat-box">
-                <span>Volume</span>
-                <strong class="stat-volume">70.06ETH</strong>
-            </div>
-            <div class="stat-box">
-                <span>Owners</span>
-                <strong class="stat-owners">1726</strong>
-            </div>
-        </div>
-        <div class="card-actions">
-            <a href="colectie1.html" class="card-btn btn-secondary">Details</a>
-            <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
-        </div>
-    </div>
-</div>
-
-            <!-- 2. BlazeEntity -->
-            <div class="card" data-slug="blazeentity">
-                <div class="card-img-wrapper">
-                    <span class="card-badge vip">VIP</span>
-                    <img src="images/Blaze.png" alt="BlazeEntity">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-club" data-category="vip" id="card-1">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">VIP</span>
+                    <img src="images/abc.png" alt="Apes Bunitori Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=ABC'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">BlazeEntity</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">1. Apes Bunitori Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie2.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/blazeentity" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-club" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. BlazeEntity -->
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="blazeentity" data-category="vip" id="card-2">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">VIP</span>
+                    <img src="images/Blaze.png" alt="BlazeEntity" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=BlazeEntity'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">2. BlazeEntity</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/blazeentity" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/blazeentity" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 3. Bonatori -->
-            <div class="card" data-slug="bonatori">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Popular</span>
-                    <img src="images/bonatori.png" alt="Bonatori">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="bonatori" data-category="popular" id="card-3">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-slate-800 text-sky-400 font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 border border-white/10">Popular</span>
+                    <img src="images/bonatori.png" alt="Bonatori" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Bonatori'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Bonatori</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">3. Bonatori</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie3.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/bonatori" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/bonatori" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/bonatori" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 4. BredApeYuriClub -->
-            <div class="card" data-slug="bredapeyuriclub">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Genesis</span>
-                    <img src="images/placeholder.png" alt="BredApeYuriClub">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="bredapeyuriclub" data-category="genesis" id="card-4">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-slate-800 text-purple-400 font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 border border-white/10">Genesis</span>
+                    <img src="images/placeholder.png" alt="BredApeYuriClub" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=BredApeYuriClub'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">BredApeYuriClub</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">4. BredApeYuriClub</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie4.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/bredapeyuriclub" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/bredapeyuriclub" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/bredapeyuriclub" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 5. Apes Bunitori Evolution -->
-            <div class="card" data-slug="apes-bunitori-evolution">
-                <div class="card-img-wrapper">
-                    <img src="images/25.png" alt="Apes Bunitori Evolution">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-evolution" data-category="vip" id="card-5">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <img src="images/25.png" alt="Apes Bunitori Evolution" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Evolution'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Apes Evolution</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">5. Apes Evolution</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie5.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-evolution" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-evolution" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-evolution" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 6. Ape Boltadori Club -->
-            <div class="card" data-slug="ape-boltadori-club">
-                <div class="card-img-wrapper">
-                    <img src="images/boltadori.png" alt="Ape Boltadori Club">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="ape-boltadori-club" data-category="popular" id="card-6">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <img src="images/boltadori.png" alt="Ape Boltadori Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Boltadori'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Ape Boltadori Club</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">6. Ape Boltadori Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie6.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/ape-boltadori-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/ape-boltadori-club" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/ape-boltadori-club" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 7. Apes The Eternal Brotherhood -->
-            <div class="card" data-slug="apes-the-eternal-brotherhood">
-                <div class="card-img-wrapper">
-                    <img src="images/brotherhood.png" alt="Apes The Eternal Brotherhood">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-the-eternal-brotherhood" data-category="vip" id="card-7">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <img src="images/brotherhood.png" alt="Eternal Brotherhood" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Brotherhood'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Eternal Brotherhood</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">7. Eternal Brotherhood</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie7.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-the-eternal-brotherhood" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-the-eternal-brotherhood" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-the-eternal-brotherhood" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 8. Apes Bunitori Premium -->
-            <div class="card" data-slug="apes-bunitori-premium">
-                <div class="card-img-wrapper">
-                    <img src="images/premium.png" alt="Apes Bunitori Premium">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-premium" data-category="vip" id="card-8">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <img src="images/premium.png" alt="Apes Premium" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Premium'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Apes Premium</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">8. Apes Premium</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie8.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-premium" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-premium" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-premium" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 9. Apes Bunitori Gold Club -->
-            <div class="card" data-slug="apes-bunitori-gold-club">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Gold</span>
-                    <img src="images/gold.png" alt="Apes Bunitori Gold Club">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-gold-club" data-category="gold" id="card-9">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">Gold</span>
+                    <img src="images/gold.png" alt="Apes Gold Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Gold'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Apes Gold Club</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">9. Apes Gold Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie9.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-gold-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-gold-club" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-gold-club" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 10. Bred Ape Yuri -->
-            <div class="card" data-slug="bred-ape-yuri">
-                <div class="card-img-wrapper">
-                    <img src="images/bay.png" alt="Bred Ape Yuri">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="bred-ape-yuri" data-category="genesis" id="card-10">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <img src="images/bay.png" alt="Bred Ape Yuri" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Yuri'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Bred Ape Yuri</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">10. Bred Ape Yuri</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie10.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/bred-ape-yuri" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/bred-ape-yuri" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/bred-ape-yuri" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 11. Apes Bunitori Limited Edition -->
-            <div class="card" data-slug="apes-bunitori-limited-edition">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Rare</span>
-                    <img src="images/boos.png" alt="Apes Bunitori Limited Edition">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-limited-edition" data-category="gold" id="card-11">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-rose-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">Rare</span>
+                    <img src="images/boos.png" alt="Limited Edition" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Limited'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Limited Edition</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">11. Limited Edition</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie11.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-limited-edition" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-limited-edition" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-limited-edition" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 12. Apes Bunitori Christmas Club -->
-            <div class="card" data-slug="apes-bunitori-christmas-club">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Seasonal</span>
-                    <img src="images/Christmas.png" alt="Apes Bunitori Christmas Club">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-christmas-club" data-category="popular" id="card-12">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-emerald-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">Seasonal</span>
+                    <img src="images/Christmas.png" alt="Christmas Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Christmas'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Christmas Club</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">12. Christmas Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie12.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-christmas-club" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-christmas-club" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-christmas-club" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 13. Apes Bunitori Dimension Base -->
-            <div class="card" data-slug="apes-bunitori-dimension">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Base</span>
-                    <img src="images/dim-base.png" alt="Apes Bunitori Dimension Base">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-dimension" data-category="dimension" id="card-13">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-blue-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">Base</span>
+                    <img src="images/dim-base.png" alt="Dimension Base" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=DimBase'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Dimension Base</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">13. Dimension Base</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie13.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-bunitori-dimension" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-dimension" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-dimension" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 14. Apes Bunitori Dimension Club -->
-            <div class="card" data-slug="apes-b-dimension-club">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">Dimension</span>
-                    <img src="images/dim-club.png" alt="Apes Bunitori Dimension Club">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-b-dimension-club" data-category="dimension" id="card-14">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-indigo-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">Dimension</span>
+                    <img src="images/dim-club.png" alt="Dimension Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=DimClub'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Dimension Club</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">14. Dimension Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie14.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-b-dimension-club/overview" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-b-dimension-club/overview" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-b-dimension-club/overview" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
 
             <!-- 15. Apes Robinhood Hoodie -->
-            <div class="card" data-slug="apes-robinhood-hoodie">
-                <div class="card-img-wrapper">
-                    <span class="card-badge">NEW</span>
-                    <img src="images/robinhood.png" alt="Apes Robinhood Hoodie">
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-robinhood-hoodie" data-category="popular" id="card-15">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-purple-600 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">NEW</span>
+                    <img src="images/robinhood.png" alt="Robinhood Hoodie" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Robinhood'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Robinhood Hoodie</h3>
-                    <div class="card-stats">
-                        <div class="stat-box">
-                            <span>Floor</span>
-                            <strong class="stat-floor">Loading...</strong>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">15. Robinhood Hoodie</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Volume</span>
-                            <strong class="stat-volume">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
                         </div>
-                        <div class="stat-box">
-                            <span>Owners</span>
-                            <strong class="stat-owners">Loading...</strong>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
                         </div>
                     </div>
-                    <div class="card-actions">
-                        <a href="colectie15.html" class="card-btn btn-secondary">Details</a>
-                        <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="card-btn btn-primary">OpenSea</a>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-robinhood-hoodie/overview" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. Brad Bunitori Club -->
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="brad-bunitori-club" data-category="vip" id="card-16">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">VIP</span>
+                    <img src="images/abc.png" alt="Brad Bunitori Club" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=BradClub'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">16. Brad Bunitori Club</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/brad-bunitori-club" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/brad-bunitori-club" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 17. Apes Bunitori Punk -->
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="apes-bunitori-punk" data-category="vip" id="card-17">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">VIP</span>
+                    <img src="images/Punk.jpg" alt="Apes Bunitori Punk" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Punk'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">17. Apes Bunitori Punk</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/apes-bunitori-punk/overview" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/apes-bunitori-punk/overview" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 18. Aetheria: The Fox Artisan -->
+            <div class="card card-hover glass-panel rounded-2xl overflow-hidden flex flex-col transition-all duration-300 border border-white/10" data-slug="aetheria-the-fox-artisan" data-category="vip" id="card-18">
+                <div class="relative w-full pt-[100%] overflow-hidden bg-slate-900">
+                    <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-[10px] px-2.5 py-1 rounded-lg z-10 shadow-md">VIP</span>
+                    <img src="images/Aetheria.png" alt="Aetheria" onerror="this.src='https://placehold.co/400x400/1e293b/ffffff?text=Aetheria'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-4 flex flex-col flex-grow justify-between">
+                    <h3 class="font-bold text-base truncate mb-3" style="color: var(--text-main);">18. Aetheria: The Fox</h3>
+                    <div class="grid grid-cols-3 gap-1 bg-black/30 rounded-xl p-2 mb-4 border border-white/5 text-center">
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Floor</span>
+                            <strong class="text-xs font-bold stat-floor" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Volume</span>
+                            <strong class="text-xs font-bold stat-volume" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] uppercase font-semibold" style="color: var(--muted-text);">Owners</span>
+                            <strong class="text-xs font-bold stat-owners" style="color: var(--text-main);">Loading...</strong>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="https://opensea.io/collection/aetheria-the-fox-artisan/overview" target="_blank" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors border border-white/10">Details</a>
+                        <a href="https://opensea.io/collection/aetheria-the-fox-artisan/overview" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-xl text-center text-xs font-semibold transition-colors shadow-md shadow-indigo-600/20">OpenSea</a>
                     </div>
                 </div>
             </div>
@@ -1167,123 +928,143 @@
         </div>
     </main>
 
-    <footer>
-        <div class="footer-copyright">
-            © BredApeYuriClub. All rights reserved.
+    <footer class="fixed bottom-0 left-0 right-0 z-50 glass-panel border-t border-white/10 py-3 px-6 lg:px-10 shadow-2xl">
+        <div class="max-w-[1700px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium" style="color: var(--muted-text);">
+            
+            <!-- Left Info & Status -->
+            <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-semibold" style="color: var(--text-main);">Live</span>
+                </div>
+                <span>|</span>
+                <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="hover:underline">Aggregating</a>
+                <span>|</span>
+                <span>Networks (Base)</span>
+                <span>|</span>
+                <span class="hidden xl:inline">Platform Terms</span>
+                <span>|</span>
+                <span class="hidden xl:inline">Wallet & Onramp Terms</span>
+                <span>|</span>
+                <span class="hidden lg:inline">Privacy Policy</span>
+            </div>
+
+            <!-- Center Social Icons -->
+            <div class="flex items-center gap-4">
+                <a href="https://discord.com" target="_blank" class="opacity-80 hover:opacity-100 transition-opacity" title="Discord">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.011c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                </a>
+                <a href="https://reddit.com" target="_blank" class="opacity-80 hover:opacity-100 transition-opacity" title="Reddit">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.221.73-.355 1.186-.355 1.028 0 1.864.836 1.864 1.863 0 .717-.411 1.334-1.003 1.635-.043.208-.076.42-.076.637 0 3.228-3.738 5.852-8.35 5.852-4.611 0-8.35-2.624-8.35-5.852 0-.215.033-.428.074-.633-.594-.302-1.008-.921-1.008-1.64 0-1.028.836-1.863 1.863-1.863.461 0 .888.138 1.198.366 1.185-.866 2.854-1.433 4.698-1.503l.915-4.277a.526.526 0 0 1 .618-.41l3.057.644a1.24 1.24 0 0 1 1.045-1.016z"/></svg>
+                </a>
+                <a href="https://telegram.org" target="_blank" class="opacity-80 hover:opacity-100 transition-opacity" title="Telegram">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27 0-.12.07-2.01 1.28-5.68 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.08-.49-.84-.27-1.51-.42-1.45-.89.03-.25.38-.51 1.07-.78 4.19-1.82 6.98-3.02 8.37-3.61 3.98-1.68 4.8-1.97 5.34-1.98.12 0 .39.03.57.18.15.13.19.3.21.42.02.13.02.39 0 .57z"/></svg>
+                </a>
+                <a href="https://x.com/BradApeYuriClub" target="_blank" class="opacity-80 hover:opacity-100 transition-opacity" title="Twitter / X">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+            </div>
+
+            <!-- Right Ticker, Support & Theme Switcher -->
+            <div class="flex items-center gap-4 flex-wrap">
+                <span class="font-bold text-emerald-400" id="ethPriceTicker">Ξ $2,458.69</span>
+                <span>|</span>
+                <a href="https://opensea.io/BredApeYuriClub/created" target="_blank" class="hover:underline">Support</a>
+                <span>|</span>
+                <!-- Theme Switcher Controls -->
+                <div class="flex items-center bg-black/30 p-1 rounded-full border border-white/10 gap-1">
+                    <button onclick="setTheme('light')" title="Light Theme" class="p-1.5 rounded-full hover:bg-white/20 transition-all text-xs">☀️</button>
+                    <button onclick="setTheme('dark')" title="Dark Theme" class="p-1.5 rounded-full hover:bg-white/20 transition-all text-xs">🌙</button>
+                    <button onclick="setTheme('cyber')" title="Cyber Green" class="p-1.5 rounded-full hover:bg-white/20 transition-all text-xs">💚</button>
+                    <button onclick="setTheme('midnight')" title="Midnight Blue" class="p-1.5 rounded-full hover:bg-white/20 transition-all text-xs">🔵</button>
+                </div>
+            </div>
+
         </div>
     </footer>
 
-    <!-- Script OpenSea Live Data -->
     <script>
-  // Obiect cu datele FIXE actualizate REALE din rețea
-  const collectionData = {
-    "apes-bunitori-club": {
-        "floor": "0.002 ETH",
-        "volume": "78.34 ETH",
-        "owners": "1970"
-    },
-    "blazeentity": {
-        "floor": "0.003 ETH",
-        "volume": "41.49 ETH",
-        "owners": "796"
-    },
-    "bonatori": {
-        "floor": "0.045 ETH",
-        "volume": "27.13 ETH",
-        "owners": "733"
-    },
-    "bredapeyuriclub": {
-        "floor": "0.001 ETH",
-        "volume": "11.69 ETH",
-        "owners": "1165"
-    },
-    "apes-bunitori-evolution": {
-        "floor": "0.247 ETH",
-        "volume": "8.96 ETH",
-        "owners": "146"
-    },
-    "ape-boltadori-club": {
-        "floor": "0.006 ETH",
-        "volume": "8.74 ETH",
-        "owners": "1253"
-    },
-    "apes-the-eternal-brotherhood": {
-        "floor": "0.230 ETH",
-        "volume": "0.72 ETH",
-        "owners": "112"
-    },
-    "apes-bunitori-premium": {
-        "floor": "0.005 ETH",
-        "volume": "1.21 ETH",
-        "owners": "206"
-    },
-    "apes-bunitori-gold-club": {
-        "floor": "0.005 ETH",
-        "volume": "1.36 ETH",
-        "owners": "293"
-    },
-    "bred-ape-yuri": {
-        "floor": "0.001 ETH",
-        "volume": "0.83 ETH",
-        "owners": "315"
-    },
-    "apes-bunitori-limited-edition": {
-        "floor": "0.012 ETH",
-        "volume": "0.16 ETH",
-        "owners": "86"
-    },
-    "apes-bunitori-christmas-club": {
-        "floor": "5.380 ETH",
-        "volume": "0.01 ETH",
-        "owners": "104"
-    },
-    "apes-bunitori-dimension": {
-        "floor": "2.500 ETH",
-        "volume": "0.14 ETH",
-        "owners": "148"
-    },
-    "apes-b-dimension-club": {
-        "floor": "0.180 ETH",
-        "volume": "0.00 ETH",
-        "owners": "2"
-    },
-    "apes-robinhood-hoodie": {
-        "floor": "0.003 ETH",
-        "volume": "6.38 ETH",
-        "owners": "1082"
-    },
-    "brad-bunitori-club": {
-        "floor": "0.127 ETH",
-        "volume": "1.57 ETH",
-        "owners": "166"
-    },
-    "apes-bunitori-punk": {
-        "floor": "0.004 ETH",
-        "volume": "4.03 ETH",
-        "owners": "571"
-    }
-};
+        const collectionData = {
+            "apes-bunitori-club": { "floor": "0.002 ETH", "volume": "78.34 ETH", "owners": "1970" },
+            "blazeentity": { "floor": "0.003 ETH", "volume": "41.49 ETH", "owners": "796" },
+            "bonatori": { "floor": "0.045 ETH", "volume": "27.13 ETH", "owners": "733" },
+            "bredapeyuriclub": { "floor": "0.001 ETH", "volume": "11.69 ETH", "owners": "1165" },
+            "apes-bunitori-evolution": { "floor": "0.247 ETH", "volume": "8.96 ETH", "owners": "146" },
+            "ape-boltadori-club": { "floor": "0.006 ETH", "volume": "8.74 ETH", "owners": "1253" },
+            "apes-the-eternal-brotherhood": { "floor": "0.230 ETH", "volume": "0.72 ETH", "owners": "112" },
+            "apes-bunitori-premium": { "floor": "0.005 ETH", "volume": "1.21 ETH", "owners": "206" },
+            "apes-bunitori-gold-club": { "floor": "0.005 ETH", "volume": "1.36 ETH", "owners": "293" },
+            "bred-ape-yuri": { "floor": "0.001 ETH", "volume": "0.83 ETH", "owners": "315" },
+            "apes-bunitori-limited-edition": { "floor": "0.012 ETH", "volume": "0.16 ETH", "owners": "86" },
+            "apes-bunitori-christmas-club": { "floor": "5.380 ETH", "volume": "0.01 ETH", "owners": "104" },
+            "apes-bunitori-dimension": { "floor": "2.500 ETH", "volume": "0.14 ETH", "owners": "148" },
+            "apes-b-dimension-club": { "floor": "0.180 ETH", "volume": "0.00 ETH", "owners": "2" },
+            "apes-robinhood-hoodie": { "floor": "0.003 ETH", "volume": "6.38 ETH", "owners": "1082" },
+            "brad-bunitori-club": { "floor": "0.127 ETH", "volume": "1.57 ETH", "owners": "166" },
+            "apes-bunitori-punk": { "floor": "0.004 ETH", "volume": "4.03 ETH", "owners": "571" },
+            "aetheria-the-fox-artisan": { "floor": "0.050 ETH", "volume": "8.40 ETH", "owners": "340" }
+        };
 
-  // Funcție care populează cardurile pe baza atributului data-slug
-  document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll('.card[data-slug]');
-    
-    cards.forEach(card => {
-      const slug = card.getAttribute('data-slug');
-      const data = collectionData[slug];
-      
-      if (data) {
-        const floorEl = card.querySelector('.stat-floor');
-        const volumeEl = card.querySelector('.stat-volume');
-        const ownersEl = card.querySelector('.stat-owners');
-        
-        if (floorEl) floorEl.textContent = data.floor;
-        if (volumeEl) volumeEl.textContent = data.volume;
-        if (ownersEl) ownersEl.textContent = data.owners;
-      }
-    });
-  });
-</script>
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('preferred_theme', themeName);
+        }
 
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem('preferred_theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+
+            const cards = document.querySelectorAll('.card[data-slug]');
+            cards.forEach(card => {
+                const slug = card.getAttribute('data-slug');
+                const data = collectionData[slug];
+                if (data) {
+                    const floorEl = card.querySelector('.stat-floor');
+                    const volumeEl = card.querySelector('.stat-volume');
+                    const ownersEl = card.querySelector('.stat-owners');
+                    if (floorEl) floorEl.textContent = data.floor;
+                    if (volumeEl) volumeEl.textContent = data.volume;
+                    if (ownersEl) ownersEl.textContent = data.owners;
+                }
+            });
+
+            // Live Search
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    cards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        card.style.display = title.includes(term) ? "flex" : "none";
+                    });
+                });
+            }
+
+            // Category Filters
+            const filterButtons = document.querySelectorAll('#filterTags button');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+                        b.classList.add('bg-white/5', 'text-slate-400', 'border', 'border-white/10');
+                    });
+                    btn.classList.add('active', 'bg-indigo-600', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-white/5', 'text-slate-400', 'border', 'border-white/10');
+
+                    const filter = btn.getAttribute('data-filter');
+                    cards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            card.style.display = "flex";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
